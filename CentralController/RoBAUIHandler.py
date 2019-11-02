@@ -89,7 +89,8 @@ def handle_key(arena):
             rob = arena.nexuses[k1-8]
 
         if rob.isActive:
-            rob.eventQ.add_hit(-1, 6666, 1000)
+            #rob.eventQ.add_hit(-1, 6666, 1000) (Removed - 2 Nov 2019 - Aslamah)
+            rob.eventQ.add_hit(1000) # a very large damage to kill (Added - 2 Nov 2019 - Aslamah)
 
     elif k == b'H':
 

@@ -203,25 +203,42 @@ class RobotEventsQueue:
         self.bufferOverlap = 100 #1000
         self.reaperID = 1111
         self.healerID = 2222
-        self.columns = 3 # timestamp, hitterID, hitterDamage
+        #self.columns = 3 # timestamp, hitterID, hitterDamage (Removed - 2 Nov 2019 - Aslamah)
+        self.columns = 1 # hitterDamage = 1 (Added - 2 Nov 2019 - Aslamah)
         self.buff = np.full([self.bufferSize, self.columns], np.nan)
         # init array as empty ROW of columns elements
         self.hitQueue = np.array([], dtype=np.int64).reshape(0, self.columns)
         self.hitInd = 0
 
-    def add_hit(self, timestamp, byWhom=-1, damage=0):
+    # (Removed - 2 Nov 2019 - Aslamah)
+    # def add_hit(self, timestamp, byWhom=-1, damage=0):
+    #     """Summary
+    #
+    #     Args:
+    #         timestamp (TYPE): Description
+    #     """
+    #     if timestamp == -1:
+    #         if self.hitInd:
+    #             timestamp = self.buff[self.hitInd-1, 0]
+    #         else:
+    #             timestamp = 0
+    #     self.buff[self.hitInd, :] = np.array([timestamp, byWhom, damage])
+    #     self.buff[:] = self.buff[self.buff[:, 0].argsort(), :]
+    #     self.hitInd += 1
+    #     if self.hitInd >= self.bufferSize:
+    #         self.hitInd = self.bufferOverlap
+    #         self.hitQueue = np.concatenate([self.hitQueue, self.buff[0:-self.bufferOverlap, :]],
+    #                                        axis=0)
+    #         self.buff[:self.bufferOverlap, :] = self.buff[-self.bufferOverlap:, :]
+    #         self.buff[self.bufferOverlap:, :] = np.nan
+
+    def add_hit(self, damage=1):
         """Summary
 
         Args:
             timestamp (TYPE): Description
         """
-        if timestamp == -1:
-            if self.hitInd:
-                timestamp = self.buff[self.hitInd-1, 0]
-            else:
-                timestamp = 0
-        self.buff[self.hitInd, :] = np.array([timestamp, byWhom, damage])
-        self.buff[:] = self.buff[self.buff[:, 0].argsort(), :]
+        self.buff[self.hitInd, :] = np.array([damage])
         self.hitInd += 1
         if self.hitInd >= self.bufferSize:
             self.hitInd = self.bufferOverlap

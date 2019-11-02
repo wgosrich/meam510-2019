@@ -270,7 +270,7 @@ class Arena:
 
     def update_healths(self):
         for rob in self.robots+self.nexuses:
-            rob.update_health()
+            rob.update_health() #update based on new architecture (Added - 2 Nov 2019 - Aslamah)
 
 
     def rob_who_IP(self, IP):
@@ -438,19 +438,76 @@ class Arena:
         """
         return ["null", "gotHit", "hit", "heal"][event]
 
+    # (Removed - 2 Nov 2019 - Aslamah)
+    # def handle_event(self, robMsgTuple, ip):
+    #     """Summary
+    #
+    #     Args:
+    #         rob (TYPE): Description
+    #         robMsgTuple (TYPE): Description
+    #         hitQueue (TYPE): Description
+    #     """
+    #     ev = self.get_event(robMsgTuple[0]&0b11)
+    #
+    #     healFreq = (robMsgTuple[0]>>2)&0b11
+    #     # towersIsCaptured = [(robMsgTuple[0]>>2)&0b11, (robMsgTuple[0]>>2)&0b11]
+    #     timestamp = robMsgTuple[1]
+    #     try:
+    #         rob, teamInd = self.rob_who_IP(ip)
+    #     except ValueError:
+    #         print("Event Detected from non playing robot")
+    #         raise ValueError("Non-Playing Robot Detected")
+    #
+    #     if not rob.isActive:
+    #         self.logL.write("***********Robot/Tower %d is inactive \n" % rob.ID)
+    #         raise RobotNotActiveError
+    #
+    #     if teamInd == 2:# Tower message
+    #
+    #         rob.captureState = 0
+    #         rob.capturePercentage = (robMsgTuple[1] & 0b11111111) - 127
+    #         teamInd = (robMsgTuple[0]>>4) & 0b1
+    #         rob.captureTeam = None
+    #         # timestamp = robMsgTuple[1]  - (robMsgTuple[1] & 0b11111111)
+    #         if ev == "hit":
+    #             rob.captureState = 1
+    #
+    #             rob.captureTeam = 'BLUE' if teamInd else 'RED'
+    #             self.teams[teamInd].nexus.eventQ.add_hit(-1, byWhom=rob.ID,
+    #                                                  damage=rob.hitDamage)
+    #             self.logL.write("\n    Hit: %d from tower: %d against "%(self.teams[teamInd].nexus.eventQ.buff[self.teams[teamInd].nexus.eventQ.hitInd-1, 0], rob.ID)+self.teams[teamInd].color +  " Nexus")
+    #         return 1
+    #
+    #
+    #     if ev == "hit":
+    #         if rob.isCooldownHit:
+    #             self.logL.write("\t \t Robot %d is on cooldown hit" % rob.ID)
+    #             raise RobotNotActiveError
+    #         self.logL.write("\n    Hit: %d from robot: %d"%(timestamp, rob.ID))
+    #         self.teams[teamInd].hitQ.add_hit(timestamp, rob.ID, rob.hitDamage)
+    #
+    #     elif ev == "gotHit":
+    #         self.logL.write("\nWas Hit: %d from robot: %d"%(timestamp, rob.ID))
+    #         rob.eventQ.add_hit(timestamp)
+    #
+    #     elif ev == "heal":
+    #         if rob.isCooldownHeal:
+    #             self.logL.write("\t \t Robot %d is on cooldown heal" % rob.ID)
+    #             raise RobotNotActiveError
+    #
+    #         if self.params.healFreq == healFreq and not rob.healFail:
+    #             self.logL.write("\n   Heal: %d from robot: %d with heal freq: %d"% (timestamp,rob.ID, healFreq))
+    #             rob.eventQ.add_heal(timestamp)
+    #         else:
+    #             rob.healFail = True
+    #     return 1
+
+
+    # (Added - 2 Nov 2019 - Aslamah)
     def handle_event(self, robMsgTuple, ip):
-        """Summary
-
-        Args:
-            rob (TYPE): Description
-            robMsgTuple (TYPE): Description
-            hitQueue (TYPE): Description
+        """Summary: receive events from Towers and nexuses
         """
-        ev = self.get_event(robMsgTuple[0]&0b11)
 
-        healFreq = (robMsgTuple[0]>>2)&0b11
-        # towersIsCaptured = [(robMsgTuple[0]>>2)&0b11, (robMsgTuple[0]>>2)&0b11]
-        timestamp = robMsgTuple[1]
         try:
             rob, teamInd = self.rob_who_IP(ip)
         except ValueError:
@@ -463,47 +520,18 @@ class Arena:
 
         if teamInd == 2:# Tower message
 
-            rob.captureState = 0
-            rob.capturePercentage = (robMsgTuple[1] & 0b11111111) - 127
-            teamInd = (robMsgTuple[0]>>4) & 0b1
-            rob.captureTeam = None
-            # timestamp = robMsgTuple[1]  - (robMsgTuple[1] & 0b11111111)
-            if ev == "hit":
-                rob.captureState = 1
+            rob.captureState = 1
+            teamInd = (robMsgTuple[0]>>1) & 0b1
+            rob.captureTeam = 'BLUE' if teamInd else 'RED'
+            self.teams[teamInd].nexus.eventQ.add_hit(rob.hitDamage) #(To check - 2 Nov 2019 - Aslamah)
+            self.logL.write("\n    Hit: from " + rob.CaptureTeam + "Tower against other Nexus")
 
-                rob.captureTeam = 'BLUE' if teamInd else 'RED'
-                self.teams[teamInd].nexus.eventQ.add_hit(-1, byWhom=rob.ID,
-                                                     damage=rob.hitDamage)
-                self.logL.write("\n    Hit: %d from tower: %d against "%(self.teams[teamInd].nexus.eventQ.buff[self.teams[teamInd].nexus.eventQ.hitInd-1, 0], rob.ID)+self.teams[teamInd].color +  " Nexus")
             return 1
 
+        #event handling for nexus
+        rob.eventQ.add_hit()
 
-        if ev == "hit":
-            if rob.isCooldownHit:
-                self.logL.write("\t \t Robot %d is on cooldown hit" % rob.ID)
-                raise RobotNotActiveError
-            self.logL.write("\n    Hit: %d from robot: %d"%(timestamp, rob.ID))
-            self.teams[teamInd].hitQ.add_hit(timestamp, rob.ID, rob.hitDamage)
-
-        elif ev == "gotHit":
-            self.logL.write("\nWas Hit: %d from robot: %d"%(timestamp, rob.ID))
-            rob.eventQ.add_hit(timestamp)
-
-        elif ev == "heal":
-            if rob.isCooldownHeal:
-                self.logL.write("\t \t Robot %d is on cooldown heal" % rob.ID)
-                raise RobotNotActiveError
-
-            if self.params.healFreq == healFreq and not rob.healFail:
-                self.logL.write("\n   Heal: %d from robot: %d with heal freq: %d"% (timestamp,rob.ID, healFreq))
-                rob.eventQ.add_heal(timestamp)
-            else:
-                rob.healFail = True
         return 1
-
-
-
-
 
 
     def handle_event_checking(self, robMsgTuple, ip):

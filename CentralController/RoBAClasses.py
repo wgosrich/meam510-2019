@@ -57,6 +57,8 @@ class Robot:
         lastHitTime (TYPE): Description (Removed - 2 Nov 2019 - Aslamah)
         name (TYPE): Description
         weight (TYPE): Description
+        xLocation (int): X-coordinate of location (Added - 2 Nov 2019 - Aslamah)
+        yLocation (int): Y-coordinate of location (Added - 2 Nov 2019 - Aslamah)
     """
 
     #def __init__(self, name, ID, number, startHealth, weight, desHitDelay): (Removed - 2 Nov 2019 - Aslamah)
@@ -75,7 +77,7 @@ class Robot:
         self.ID = ID
 
         self.IP = ''
-        self.eventQ = RobotEventsQueue()
+        #self.eventQ = RobotEventsQueue() (Removed - 2 Nov 2019 - Aslamah)
 
         print("Robot Init  ID: ", end=' ')
         print(self.ID)
@@ -178,6 +180,7 @@ class Robot:
     #             self.lastDeathTime = datetime.now()
     #             self.isActive = False
 
+    # update based on how walker is receiving health info from robots (Added - 2 Nov 2019 - Aslamah)
     def update_health(self):
         damage = self.eventQ.get_damage()
         if self.isActive:
@@ -305,6 +308,7 @@ class Tower:
 
     def resume_from_pause(self, timePassed):
         pass
+        
     def is_captured(self):
         """Returns if the tower is captured
 
