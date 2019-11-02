@@ -47,27 +47,28 @@ class Robot:
         eventQ (TYPE): Description
         fullHealth (TYPE): Description
         health (TYPE): Description
-        hitDamage (TYPE): Description
-        hitDelay (TYPE): Description
+        hitDamage (TYPE): Description (Removed - 2 Nov 2019 - Aslamah)
+        hitDelay (TYPE): Description (Removed - 2 Nov 2019 - Aslamah)
         ID (TYPE): Description
         IP (str): Description
         isActive (bool): Description
-        lastDeathTime (TYPE): Description
-        lastHealTime (TYPE): Description
-        lastHitTime (TYPE): Description
+        lastDeathTime (TYPE): Description (Removed - 2 Nov 2019 - Aslamah)
+        lastHealTime (TYPE): Description (Removed - 2 Nov 2019 - Aslamah)
+        lastHitTime (TYPE): Description (Removed - 2 Nov 2019 - Aslamah)
         name (TYPE): Description
         weight (TYPE): Description
     """
 
-    def __init__(self, name, ID, number, startHealth, weight, desHitDelay):
+    #def __init__(self, name, ID, number, startHealth, weight, desHitDelay): (Removed - 2 Nov 2019 - Aslamah)
+    def __init__(self, name, ID, number, weight):
         """Summary
 
         Args:
             name (TYPE): Description
             ID (TYPE): Description
-            startHealth (TYPE): Description
+            startHealth (TYPE): Description (Removed - 2 Nov 2019 - Aslamah)
             weight (TYPE): Description
-            desHitDelay (TYPE): Description
+            desHitDelay (TYPE): Description (Removed - 2 Nov 2019 - Aslamah)
         """
         # Added name field for live stream and stats display
         self.name = name
@@ -82,35 +83,36 @@ class Robot:
         # Keeps track of the robots starting health and what is max or respawn health
         # Note that this is in the init and not outside of it so that health
         # can be added as a design characteristic for the students (if desired)
-        self.fullHealth = startHealth
+        #self.fullHealth = startHealth (Removed - 2 Nov 2019 - Aslamah)
+        self.weight = weight # (Added - 2 Nov 2019 - Aslamah)
+        self.fullHealth = calc_start_health(self); # (Added - 2 Nov 2019 - Aslamah)
 
         # Resets all of the robots state to clean slate
 
 
         # Timing variables
-        self.lastHitTime = datetime(2000, 1, 1)
-        self.lastHealTime = datetime(2000, 1, 1)
-        self.lastDeathTime = datetime(2000, 1, 1)
+        #self.lastHitTime = datetime(2000, 1, 1) (Removed - 2 Nov 2019 - Aslamah)
+        #self.lastHealTime = datetime(2000, 1, 1) (Removed - 2 Nov 2019 - Aslamah)
+        #self.lastDeathTime = datetime(2000, 1, 1) (Removed - 2 Nov 2019 - Aslamah)
         # Robot base characteristics
         self.health = self.fullHealth
         self.isActive = False
         self.reset()
 
         # Const Stats
-        self.weight = weight
-        self.hitDelay = float(desHitDelay)
-        self.healDelay = params.healDelay
-        self.hitDamage = self.calc_DPS()*desHitDelay
+        #self.hitDelay = float(desHitDelay) (Removed - 2 Nov 2019 - Aslamah)
+        #self.healDelay = params.healDelay (Removed - 2 Nov 2019 - Aslamah)
+        #self.hitDamage = self.calc_DPS()*desHitDelay (Removed - 2 Nov 2019 - Aslamah)
 
         # Perform a check to limit max damage and adjust hitDelay accordingly.
         # i.e. if calculated damage > max damage lower hitDelay
-        if self.hitDamage > params.maxDamage: #Max allowable damage per hit:
-            self.hitDamage = params.maxDamage
-            self.hitDelay = float(params.maxDamage/self.calc_DPS())
+        #if self.hitDamage > params.maxDamage: #Max allowable damage per hit: (Removed - 2 Nov 2019 - Aslamah)
+        #    self.hitDamage = params.maxDamage
+        #    self.hitDelay = float(params.maxDamage/self.calc_DPS())
 
-        self.isCooldownHit = False
-        self.isCooldownHeal = False
-        self.healFail = False
+        #self.isCooldownHit = False (Removed - 2 Nov 2019 - Aslamah)
+        #self.isCooldownHeal = False (Removed - 2 Nov 2019 - Aslamah)
+        #self.healFail = False (Removed - 2 Nov 2019 - Aslamah)
         self.color = ""
         self.number = number
 
@@ -118,9 +120,9 @@ class Robot:
         """Summary
         """
         # Timing variables
-        self.lastHitTime = datetime(2000, 1, 1)
-        self.lastHealTime = datetime(2000, 1, 1)
-        self.lastDeathTime = datetime(2000, 1, 1)
+        #self.lastHitTime = datetime(2000, 1, 1) (Removed - 2 Nov 2019 - Aslamah)
+        #self.lastHealTime = datetime(2000, 1, 1) (Removed - 2 Nov 2019 - Aslamah)
+        #self.lastDeathTime = datetime(2000, 1, 1) (Removed - 2 Nov 2019 - Aslamah)
         # Robot base characteristics
         self.health = self.fullHealth
         self.isActive = False
@@ -132,15 +134,15 @@ class Robot:
             timePassed (TYPE): Description
         # """
 
-        print("Robot %d Last Death Time: " % self.ID, self.lastDeathTime)
+        #print("Robot %d Last Death Time: " % self.ID, self.lastDeathTime) (Removed - 2 Nov 2019 - Aslamah)
         # print("lastHealTime",self.lastHealTime)
         # print("lastHitTime",self.lastHitTime)
 
-        self.lastDeathTime += timePassed
-        self.lastHealTime += timePassed
-        self.lastHitTime += timePassed
+        #self.lastDeathTime += timePassed (Removed - 2 Nov 2019 - Aslamah)
+        #self.lastHealTime += timePassed (Removed - 2 Nov 2019 - Aslamah)
+        #self.lastHitTime += timePassed (Removed - 2 Nov 2019 - Aslamah)
 
-        print("Robot %d Last Death Time: " % self.ID, self.lastDeathTime)
+        #print("Robot %d Last Death Time: " % self.ID, self.lastDeathTime) (Removed - 2 Nov 2019 - Aslamah)
         # print("lastHealTime",self.lastHealTime)
         # print("lastHitTime",self.lastHitTime)
 
@@ -149,13 +151,19 @@ class Robot:
         """
         self.isActive = False
 
-    def calc_DPS(self):
-        """Summary
+    #(Removed - 2 Nov 2019 - Aslamah)
+    # def calc_DPS(self):
+    #     """Summary
+    #
+    #     Returns:
+    #         TYPE: Description
+    #     """
+    #     return params.robot_dps(self.weight) # Current robot DPS formula
 
-        Returns:
-            TYPE: Description
-        """
-        return params.robot_dps(self.weight) # Current robot DPS formula
+    # (Added - 2 Nov 2019 - Aslamah)
+    def calc_start_health(self):
+        return params.robot_start_health(self.weight);
+
 
     # def take_damage(self, damage):
     #     """Summary
@@ -186,14 +194,15 @@ class Robot:
         #TODO FIXME DEBUG We need to re introduce the cool down
         self.lastHitTime = datetime.now()
 
-    def heal(self, healAmount):
-        """Summary
-
-        Args:
-            healAmount (TYPE): Description
-        """
-        self.health = min( self.health + healAmount, self.fullHealth)
-        self.lastHealTime = datetime.now()
+    # (Removed - 2 Nov 2019 - Aslamah)
+    # def heal(self, healAmount):
+    #     """Summary
+    #
+    #     Args:
+    #         healAmount (TYPE): Description
+    #     """
+    #     self.health = min( self.health + healAmount, self.fullHealth)
+    #     self.lastHealTime = datetime.now()
 
 
 class MetaTeam:

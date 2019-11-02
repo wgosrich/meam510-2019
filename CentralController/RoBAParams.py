@@ -14,27 +14,28 @@ class RoBAParams:
 
     Attributes:
         autonomousStartEnabled (bool): Description
-        healAmount (int): Description
-        healDelay (int): Description
-        healingEnabled (bool): Description
+        healAmount (int): Description (Removed - 2 Nov 2019 - Aslamah)
+        healDelay (int): Description (Removed - 2 Nov 2019 - Aslamah)
+        healingEnabled (bool): Description (Removed - 2 Nov 2019 - Aslamah)
         maxDamage (int): Description
         nexusMaxHealth (int): Description
-        nexusReflectedMulti (float): Description
-        robotMaxHealth (int): Description
+        nexusReflectedMulti (float): Description (Removed - 2 Nov 2019 - Aslamah)
+        robotMaxHealth (int): Description (Removed - 2 Nov 2019 - Aslamah)
         towerDPS (int): Description
         towersEnabled (bool): Description
 
     """
 
     nexusMaxHealth = 900 # [HP]
-    robotMaxHealth = 99 # [HP]
-    healAmount = 20 # [HP]
-    healDelay = 5 # [secs]
-    towerDPS = 4  # [DPS]
-    reflectedNexusMulti = .5 # []
+    #robotMaxHealth = 99 # [HP] (Removed - 2 Nov 2019 - Aslamah)
+    robotMinStartHealth = 5 # [HP] (Added - 2 Nov 2019 - Aslamah)
+    #healAmount = 20 # [HP] (Removed - 2 Nov 2019 - Aslamah)
+    #healDelay = 5 # [secs] (Removed - 2 Nov 2019 - Aslamah)
+    towerDPS = 0.5  # [DPS] (Added - 2 Nov 2019 - Aslamah)
+    #reflectedNexusMulti = .5 # [] (Removed - 2 Nov 2019 - Aslamah)
     maxDamage = 25 # Max allowable damage per hit
-    healFreq = HIGH
-    healingEnabled = True # Enable the healing lights and healing capability
+    #healFreq = HIGH (Removed - 2 Nov 2019 - Aslamah)
+    #healingEnabled = True # Enable the healing lights and healing capability (Removed - 2 Nov 2019 - Aslamah)
     towersEnabled = True # Enable tower capture
     autonomousStartEnabled = True # Enable autonomous mode at the start of the game
     autonomousStartTime = 30
@@ -51,3 +52,12 @@ class RoBAParams:
         return np.floor((datetime.now()-arena.gameStartTime).seconds/60) * 10 + 20
     def robot_dps(self, weight):
         return max((12 - 2 * weight), self.minDPS)
+
+    # (Added - 2 Nov 2019 - Aslamah)
+    def robot_start_health(weight):
+        """Summary: minimum weight is 500g or 0.5kg, which will have maximum health of 20
+
+        Returns:
+            int : starting health based on weight
+        """
+        return max(21 - 2 * weight, robotMinStartHealth)

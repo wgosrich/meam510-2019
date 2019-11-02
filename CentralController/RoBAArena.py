@@ -136,9 +136,9 @@ class Arena:
                 Robot(data['RobotName'][rowIndex],
                       data['RobotID'][rowIndex],
                       data['RobotNumber'][rowIndex],
-                      self.params.robotMaxHealth,
+                      #self.params.robotMaxHealth, (Removed - 2 Nov 2019 - Aslamah)
                       data['Weight'][rowIndex],
-                      data['DesCooldown'][rowIndex])
+                      #data['DesCooldown'][rowIndex]) (Removed - 2 Nov 2019 - Aslamah)
                 )
         return teams
 
@@ -535,5 +535,3 @@ class Arena:
 
 if __name__ == "__main__":
     testArena = Arena('teamsTest.csv', 1, 2)
-
-
