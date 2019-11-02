@@ -1,0 +1,45 @@
+MetaTeamNumber,MetaTeamName,RobotNumber,RobotID,RobotName,Weight,DesCooldown
+1,Bikini Bots,1,1,Squidward Teensacles,2.5,1
+1,Bikini Bots,2,2,SpongeBot,2,2
+1,Bikini Bots,3,3,Botrick,1.9,3
+1,Bikini Bots,4,4,Gary,1.8,4
+2,Hodgepodge,1,5,Reinhardt,2,5
+2,Hodgepodge,2,6,Tanky McTankface,0.8,6
+2,Hodgepodge,3,7,traffic cOnE,1.1,7
+2,Hodgepodge,4,8,The Goat,1.6,8
+3,Teletubbies,1,9,Po,2,9
+3,Teletubbies,2,10,Laa Laa Stark,1.9,10
+3,Teletubbies,3,11,Dipsy,1.9,11
+3,Teletubbies,4,12,Tinky Winky,1.8,12
+4,Thank U Nexus,1,13,Sean Eats The Robot,1.9,13
+4,Thank U Nexus,2,14,You Shall Not Sleep,0.9,14
+4,Thank U Nexus,3,15,L298N,0.9,15
+4,Thank U Nexus,4,16,MDF TANK,2.2,16
+5,Superheroes,1,17,TODO,2.5,1
+5,Superheroes,2,18,Donkey Kong,2,2
+5,Superheroes,3,19,Aquabot,1.9,3
+5,Superheroes,4,20,Rob-ot Ward-iors,1.8,4
+6,Return of the Teensy,1,21,Milleniium Falcon,2,5
+6,Return of the Teensy,2,22,BB8,0.8,6
+6,Return of the Teensy,3,23,R2D2,1.1,7
+6,Return of the Teensy,4,24,C3PO,1.6,8
+7,Super Smash Bots,1,25,Atom-the-Smasher,2,9
+7,Super Smash Bots,2,26,Pikachu,1.9,10
+7,Super Smash Bots,3,27,Trophybot,1.9,11
+7,Super Smash Bots,4,28,Cannon,1.8,12
+8,Teaching Team,1,29,Whats Wrong Jundong,1.9,13
+8,Teaching Team,2,30,Better Call Paul,0.9,14
+8,Teaching Team,3,31,Sparky Mark ,2.2,15
+8,Teaching Team,4,32,Leggo My Diego,2.5,16
+9,Elite Four,1,33,Bulbasaur,2.5,1
+9,Elite Four,2,34,Squirtle,2,2
+9,Elite Four,3,35,Pikabot,1.9,3
+9,Elite Four,4,36,TODO,1.8,4
+10,A,1,1,KILLER BOT,2.5,1
+10,A,2,2,THIS ONE,2,2
+10,A,3,3,THAT ONE,1.9,3
+10,A,4,4,BETTER BOT,1.8,4
+20,B,1,5,BLUE ROBOT 1,2,5
+20,B,2,6,BLUE ROBOT 2,0.8,6
+20,B,3,7,BLUE ROBOT 3,1.1,7
+20,B,4,8,BLUE ROBOT 4,1.6,8

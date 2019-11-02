@@ -1,0 +1,19 @@
+Architecture Notes
+
+System initializes, starts all the queues, and then initializes the syncing sequence (BLOCKING)
+
+Sends everyone the first update (BLOCKING)
+
+Opens Server Port for communication (This throws to clients in threads)
+    Everytime we get a communication, we update the arena state.
+        OOOORRRR We have a timing thread that causes an update every quarter second. This could be UDP, would require more bytes .
+THings that could be threaded
+    Arena.updates could be threaded (this is the only place that  changes are made to arena objects, note that reading may stil require locking)
+
+Open server port seperate thread than only checks if we need to resync again.
+
+GUI should ahve a thread/s for communication, also TCP, perhaps part of UDP ?
+
+System spins up GUI thread
+
+Perhaps batch threaded updates only updating once per every tenth of a sec (complicated do only if having speed issues. )
