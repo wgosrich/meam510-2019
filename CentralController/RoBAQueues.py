@@ -259,7 +259,7 @@ class RobotEventsQueue:
         if self.hitInd >= self.bufferSize:
             self.hitInd = self.bufferOverlap
             self.hitQueue = np.concatenate([self.hitQueue, self.buff[0:-self.bufferOverlap, :]],
-                                           axis=0)
+                                           axis=0) #appends an empty bufferSize-bufferOverlap row array to the hitQueue
             self.buff[:self.bufferOverlap, :] = self.buff[-self.bufferOverlap:, :]
             self.buff[self.bufferOverlap:, :] = np.nan
 
