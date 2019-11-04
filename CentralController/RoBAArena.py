@@ -331,12 +331,26 @@ class Arena:
 
         towerByte = (np.uint8((self.towers[0].capturePercentage + 100)/14) +
                      (np.uint8((self.towers[1].capturePercentage + 100)/14)<<4))
+
+        # (Added - 4 Nov 2019 - Walker)
+        #create integer list of robot starting health
+        startHealth = [0]*8
+        for enum, rob in enumerate(self.redTeam.robots):
+            startHealth[enum] = rob.fullHealth
+        for enum, rob in enumerate(self.blueTeam.robots):
+            startHealth[enum+4] = rob.fullHealth
+
+        # (Added - 4 Nov 2019 - Walker)
+        #create (currently empty) location list for broadcast
+        location = [0]*8
+
+        #create integer list of robots health
         health = [0]*8
         for enum, rob in enumerate(self.redTeam.robots):
             health[enum] = rob.health
         for enum, rob in enumerate(self.blueTeam.robots):
             health[enum+4] = rob.health
-
+        """ (Removed - 4 Nov 2019 - Walker)
         outputString = struct.pack('=BBHH12B',
                                    np.uint8(128 + infoByte),
                                    np.uint8(cooldownByte),
@@ -354,6 +368,32 @@ class Arena:
                                    np.uint8(self.redTeam.number),
                                    np.uint8(self.blueTeam.number),
                                    np.uint8(128 + 2))
+        """
+        #(Added - 4 Nov 2019 - Walker)
+        outputString = struct.pack('=BHH20B',
+            np.uint8(128 + infoByte),
+            np.uint16(self.nexuses[0].health),
+            np.uint16(self.nexuses[1].health),
+            np.uint8(startHealth[0]),
+            np.uint8(startHealth[1]),
+            np.uint8(startHealth[2]),
+            np.uint8(startHealth[3]),
+            np.uint8(startHealth[4]),
+            np.uint8(startHealth[5]),
+            np.uint8(startHealth[6]),
+            np.uint8(startHealth[7]),
+            np.uint8(location[0]),
+            np.uint8(location[1]),
+            np.uint8(location[2]),
+            np.uint8(location[3]),
+            np.uint8(location[4]),
+            np.uint8(location[5]),
+            np.uint8(location[6]),
+            np.uint8(location[7]),
+            np.uint8(towerByte),
+            np.uint8(self.redTeam.number),
+            np.uint8(self.blueTeam.number), 
+            np.uint8(128 + 2)) # why does Diego terminate with 10000010?? seems like it should be 128+1
 
         return outputString
 
