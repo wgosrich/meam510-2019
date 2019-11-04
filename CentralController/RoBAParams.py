@@ -49,7 +49,8 @@ class RoBAParams:
         Returns:
             TYPE: Description
         """
-        return np.floor((datetime.now()-arena.gameStartTime).seconds/60) * 10 + 20
+        # return np.floor((datetime.now()-arena.gameStartTime).seconds/60) * 10 + 20 (Removed - 4 Nov 2019 - Walker)
+        return 15 # (Added - 4 Nov 2019 - Walker)
     def robot_dps(self, weight):
         return max((12 - 2 * weight), self.minDPS)
 
