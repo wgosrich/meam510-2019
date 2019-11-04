@@ -241,11 +241,12 @@ class RobotEventsQueue:
         self.buff[self.hitInd, :] = np.array([damage])
         self.hitInd += 1
         if self.hitInd >= self.bufferSize:
+            # TODO: make this into a (private?) class function
             self.hitInd = self.bufferOverlap
             self.hitQueue = np.concatenate([self.hitQueue, self.buff[0:-self.bufferOverlap, :]],
-                                           axis=0)
-            self.buff[:self.bufferOverlap, :] = self.buff[-self.bufferOverlap:, :]
-            self.buff[self.bufferOverlap:, :] = np.nan
+                                           axis=0)  #appends the first bufferSize-bufferOverlap rows of the buffer to the hitQueue
+            self.buff[:self.bufferOverlap, :] = self.buff[-self.bufferOverlap:, :] # moves the bufferOverlap rows to the beginning of the buffer
+            self.buff[self.bufferOverlap:, :] = np.nan # fills the rest of the buffer with empty
 
     def add_reaper(self):
 
@@ -259,8 +260,8 @@ class RobotEventsQueue:
         if self.hitInd >= self.bufferSize:
             self.hitInd = self.bufferOverlap
             self.hitQueue = np.concatenate([self.hitQueue, self.buff[0:-self.bufferOverlap, :]],
-                                           axis=0) #appends an empty bufferSize-bufferOverlap row array to the hitQueue
-            self.buff[:self.bufferOverlap, :] = self.buff[-self.bufferOverlap:, :]
+                                           axis=0)
+            self.buff[:self.bufferOverlap, :] = self.buff[-self.bufferOverlap:, :] 
             self.buff[self.bufferOverlap:, :] = np.nan
 
     def add_heal(self, timestamp):
