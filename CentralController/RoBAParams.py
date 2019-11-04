@@ -55,10 +55,10 @@ class RoBAParams:
         return max((12 - 2 * weight), self.minDPS)
 
     # (Added - 2 Nov 2019 - Aslamah)
-    def robot_start_health(weight):
+    def robot_start_health(self, weight):
         """Summary: minimum weight is 500g or 0.5kg, which will have maximum health of 20
 
         Returns:
             int : starting health based on weight
         """
-        return max(21 - 2 * weight, robotMinStartHealth)
+        return max(21 - 2 * weight, self.robotMinStartHealth)

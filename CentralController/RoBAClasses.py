@@ -87,7 +87,7 @@ class Robot:
         # can be added as a design characteristic for the students (if desired)
         #self.fullHealth = startHealth (Removed - 2 Nov 2019 - Aslamah)
         self.weight = weight # (Added - 2 Nov 2019 - Aslamah)
-        self.fullHealth = calc_start_health(self); # (Added - 2 Nov 2019 - Aslamah)
+        self.fullHealth = self.calc_start_health(); # (Added - 2 Nov 2019 - Aslamah)
 
         # Resets all of the robots state to clean slate
 
@@ -232,7 +232,7 @@ class MetaTeam:
         self.number = number
         self.robots = []
         self.nexus = Nexus()
-        self.hitQ = False
+        self.hitQ = False # what is MetaTeam hitQ used for?
         self.color = None
 
     def add_robot(self, rob):
@@ -340,7 +340,7 @@ class Nexus:
     def __init__(self, ID=80):
         """Summary
         """
-        self.reflectedMulti = params.reflectedNexusMulti
+        # self.reflectedMulti = params.reflectedNexusMulti (Removed - 4 Nov 2019 - Walker)
         self.health = params.nexusMaxHealth
         self.fullHealth = params.nexusMaxHealth
         self.eventQ = RobotEventsQueue()
