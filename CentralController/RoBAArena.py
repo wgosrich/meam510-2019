@@ -137,9 +137,9 @@ class Arena:
                       data['RobotID'][rowIndex],
                       data['RobotNumber'][rowIndex],
                       #self.params.robotMaxHealth, (Removed - 2 Nov 2019 - Aslamah)
-                      data['Weight'][rowIndex],
+                      data['Weight'][rowIndex])
                       #data['DesCooldown'][rowIndex]) (Removed - 2 Nov 2019 - Aslamah)
-                )
+                      )
         return teams
 
     def heartbeat(self):
