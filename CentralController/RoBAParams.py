@@ -28,7 +28,7 @@ class RoBAParams:
 
     nexusMaxHealth = 900 # [HP]
     #robotMaxHealth = 99 # [HP] (Removed - 2 Nov 2019 - Aslamah)
-    robotMinStartHealth = 5 # [HP] (Added - 2 Nov 2019 - Aslamah)
+    robotMinStartHealth = 2 # [HP] (Added - 2 Nov 2019 - Aslamah)
     #healAmount = 20 # [HP] (Removed - 2 Nov 2019 - Aslamah)
     #healDelay = 5 # [secs] (Removed - 2 Nov 2019 - Aslamah)
     towerDPS = 0.5  # [DPS] (Added - 2 Nov 2019 - Aslamah)
@@ -60,4 +60,4 @@ class RoBAParams:
         Returns:
             int : starting health based on weight
         """
-        return max(21 - 2 * weight, robotMinStartHealth)
+        return max(10/(weight + 0.5), robotMinStartHealth)
