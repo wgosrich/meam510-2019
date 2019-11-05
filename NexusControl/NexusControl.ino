@@ -15,10 +15,10 @@
 *   13 Tower Status low Nyble is bottom tower status, high nyble is top tower status
 *
 * IO
-*   Weapon  32   
-*   Button  23   
+*   Weapon  32
+*   Button  23
 *
-*   SCL   25    
+*   SCL   25
 *   SDA   33
 *
 *   DIP 0 2
@@ -44,12 +44,12 @@
 *
 * V5: V4 but the SPI Stuff added
 * V5_1:V5 11/5 Diego separating the UDP response port look for !!!!!! or Diego
-* 
+*
 * V6:  Started adding in the SPI but we decided to go with I2C so it was skipped
-* 
+*
 * V7:  Added in UDP Sync Beacon at startup, once a TCP message is sent requesting a sync it moves on.  Changed to receive on UDP and send on TCP.  Included I2C test communication to make sure it didn't break anything
 *       TODO:  Work out I2C message types.  Need a request bytes and write for healing frequency.
-*       
+*
 * V8:  Formated the I2C to be properly formatted.
 *
 *
@@ -158,7 +158,7 @@ void IRAM_ATTR handleButtonInterrupt() {
 
 //LED STUFF++++++++++++++++++++++++++++++++++++++++
 /** show() for ESP32
- *  Call this function instead of FastLED.show(). It signals core 0 to issue a show, 
+ *  Call this function instead of FastLED.show(). It signals core 0 to issue a show,
  *  then waits for a notification that it is done.
  */
 void FastLEDshowESP32()
@@ -223,12 +223,12 @@ void ShowHealth(int health){
     leds[i] = teamColor*(health > (i*FULLHEALTH/NUM_LEDS));  // the other leds go off in increments of 5
   }
 
-  
+
 }
 
 void clearLEDs(void){
   for(int i=0; i<NUM_LEDS; i++){
-    leds[i] = 0; // Turn off everything 
+    leds[i] = 0; // Turn off everything
   }
 }
 // END LED STUFF++++++++++++++++++++++++++++++++++++++++
@@ -259,15 +259,15 @@ void setup() {
 
   // setup pins
   pinMode(ROBOTID0,INPUT_PULLUP);
-  
- 
+
+
   pinMode(BUTTON,INPUT_PULLUP);
-  
+
   pinMode(LEDBUILTIN,OUTPUT);
 
   //Create interups for weapon and button
   attachInterrupt(digitalPinToInterrupt(BUTTON), handleButtonInterrupt, FALLING);
-  
+
     // setup robot number
   //robotNumber=(80);//+digitalRead(ROBOTID0));
   robotNumber=(80+(TEAMCOLOR==BLUE));
@@ -300,7 +300,7 @@ void setup() {
   //cli = serverSend.available();
   bool messageSent = 0;
   while (!messageSent){
-    delay(100); 
+    delay(100);
     Serial.println("I need to sync!");
     cli.connect(centralIP,TCPSyncPort);//!!!!!!!!!    11/5 Diego
     if (cli) {
@@ -309,13 +309,13 @@ void setup() {
       messageSent = 1;
       //serverSend.write(syncPacket,sizeof(syncPacket)); //(data bytes to send, number of bytes of the data)
     }
-    
+
   }
 
   //LED STUFF++++++++++++++++++++++++++++++++++++++++
   SetupFastLED();  // Setup the LEDs
   //END LED STUFF++++++++++++++++++++++++++++++++++++++++
-  
+
   wdtInit();  // need to init at the end or it will reset on one missed message
 
   Serial.println("End of Setup");
@@ -330,9 +330,10 @@ void loop() {
    static bool gameStatus = 0;              // game on 1, game off 0
    static bool reset = 0;                   // 1 for reseting, not sure what the intention is here, check with Diego
    static bool autoMode = 0;                // 0 not autonomous, 1 is autonomous
-   
-   static bool syncStatus = 0;  
-   static bool syncStatusPrev = syncStatus;              // 0 sync still hasn't happend, 1 sync has happend
+
+   // (Removed - 5 Nov 2019 - Aslamah)
+   // static bool syncStatus = 0;
+   // static bool syncStatusPrev = syncStatus;              // 0 sync still hasn't happend, 1 sync has happend
   // 0 sync still hasn't happend, 1 sync has happend
    static byte coolDownStatus = 0;          // 0 ready to hit, 1 cooling down
 
@@ -340,7 +341,7 @@ void loop() {
    static byte healthNexus[4];      // health of the two nexi each is 10 bit
    static byte towerStatus[2];      // status of the two towers.  Not sure why this needs 4 bits each.
 
-   
+
    //static unsigned int incomingDataAddress= incomingData;
    static int packetNumber = 0;  // Used to track if a new packet has come in
    static int packetNumberOld;  // Used to track if a new packet has come in
@@ -361,7 +362,7 @@ void loop() {
   int packetSize = udpReceive.parsePacket();
   if (packetSize) {
     digitalWrite(LEDBUILTIN,!digitalRead(LEDBUILTIN));
-    
+
     Serial.print("Received packet of size ");
     Serial.println(packetSize);
     Serial.print("From ");
@@ -380,7 +381,7 @@ void loop() {
       Serial.println(incomingData[i]);
     }
     packetNumber++;
-   
+
   }
 
   // -----------------------------------------------------------------
@@ -388,96 +389,106 @@ void loop() {
 
 //==========================================================================================================
 // Sync with UDP
-  if ((syncTime == 0) | ~syncStatus) {
-    //read udp
-    int packetSize = udpSync.parsePacket();
-    if (packetSize) {
+// (Removed - 5 Nov 2019 - Aslamah)
+  // if ((syncTime == 0) | ~syncStatus) {
+  //   //read udp
+  //   int packetSize = udpSync.parsePacket();
+  //   if (packetSize) {
+  //
+  //     syncTime=millis(); // if you get a packet the sync get the offset for syncing
+  //
+  //     Serial.print("Received packet of size ");
+  //     Serial.println(packetSize);
+  //     Serial.print("From ");
+  //     //IPAddress centralIP = udpSync.remoteIP();
+  //     Serial.print(centralIP);
+  //     Serial.print(", port ");
+  //     Serial.println(udpSync.remotePort());
+  //
+  //     // read the packet into packetBufffer
+  //     int len = udpSync.read(packetBuffer, 2);
+  //     if (len > 0) {
+  //       packetBuffer[len] = 0;
+  //     }
+  //     Serial.println("Contents:");
+  //     Serial.println((byte)packetBuffer[0]);
+  //
+  //     byte udpPacketNumber = packetBuffer[0]; // the number of the sync packet sent, specific to how we are organizing things.
+  //
+  //     // send the TCP response
+  //     char syncPacket[] = {robotNumber, udpPacketNumber};
+  //     //cli = serverSend.available();
+  //     cli.connect(centralIP,TCPSyncPort);//!!!!!!!!!    11/5 Diego
+  //     if (cli) {
+  //       cli.print(syncPacket);
+  //       Serial.println("Sync Response sent");
+  //       //serverSend.write(syncPacket,sizeof(syncPacket)); //(data bytes to send, number of bytes of the data)
+  //     }
+  //     cli.stop();
+  //     Serial.print("Robot Number: ");
+  //     Serial.println(robotNumber);
+  //     //Serial.println();
+  //     Serial.print("syncTime: ");
+  //     Serial.println(syncTime);
+  //     Serial.println();
+  //
+  //   }
+  // }
+  //
+  //
+  // if (syncStatus > syncStatusPrev){
+  //   syncTimeUsed = syncTime;
+  // }
+  // syncStatusPrev = syncStatus;
 
-      syncTime=millis(); // if you get a packet the sync get the offset for syncing
-
-      Serial.print("Received packet of size ");
-      Serial.println(packetSize);
-      Serial.print("From ");
-      //IPAddress centralIP = udpSync.remoteIP();
-      Serial.print(centralIP);
-      Serial.print(", port ");
-      Serial.println(udpSync.remotePort());
-
-      // read the packet into packetBufffer
-      int len = udpSync.read(packetBuffer, 2);
-      if (len > 0) {
-        packetBuffer[len] = 0;
-      }
-      Serial.println("Contents:");
-      Serial.println((byte)packetBuffer[0]);
-
-      byte udpPacketNumber = packetBuffer[0]; // the number of the sync packet sent, specific to how we are organizing things.
-
-      // send the TCP response
-      char syncPacket[] = {robotNumber, udpPacketNumber};
-      //cli = serverSend.available();
-      cli.connect(centralIP,TCPSyncPort);//!!!!!!!!!    11/5 Diego
-      if (cli) {
-        cli.print(syncPacket);
-        Serial.println("Sync Response sent");
-        //serverSend.write(syncPacket,sizeof(syncPacket)); //(data bytes to send, number of bytes of the data)
-      }
-      cli.stop();
-      Serial.print("Robot Number: ");
-      Serial.println(robotNumber);
-      //Serial.println();
-      Serial.print("syncTime: ");
-      Serial.println(syncTime);
-      Serial.println();
-      
-    }
-  }
-
-  
-  if (syncStatus > syncStatusPrev){
-    syncTimeUsed = syncTime;
-  }
-  syncStatusPrev = syncStatus;
-  
    //-----------------------------------------------------------------------------------------------------
    // Parse Data
    delay(1);
    // Parse the data if something new came in.  This is not required as we can just have them request a byte from the incomingData
    if (packetNumber-packetNumberOld){ // a new packet came in update info.
-      
-      
-      
+
+
+
       gameStatus = 1 & (incomingData[0]>>0);      // game on 1, game off 0
       reset = 1 & (incomingData[0]>>1);           // 1 for reseting, not sure what the intention is here, check with Diego
       autoMode = 1 & (incomingData[0]>>2);        // 0 not autonomous, 1 is autonomous
-      syncStatus = 1 & (incomingData[0]>>3);      // 0 sync still hasn't happend, 1 sync has happend
-      Serial.print("Sync Status: ");
-      Serial.println(syncStatus);
-      Serial.println();
-      coolDownStatus = incomingData[1];  // 0 ready to hit, 1 cooling down
-      healthNexus[0] = incomingData[2];
-      healthNexus[1] = incomingData[3];
-      healthNexus[2] = incomingData[4];
-      healthNexus[3] = incomingData[5];
+      // (Removed - 5 Nov 2019 - Aslamah)
+      // syncStatus = 1 & (incomingData[0]>>3);      // 0 sync still hasn't happend, 1 sync has happend
+      // Serial.print("Sync Status: ");
+      // Serial.println(syncStatus);
+      // Serial.println();
+      // coolDownStatus = incomingData[1];  // 0 ready to hit, 1 cooling down // (Removed - 5 Nov 2019 - Aslamah)
+      // healthNexus[0] = incomingData[2];
+      // healthNexus[1] = incomingData[3];
+      // healthNexus[2] = incomingData[4];
+      // healthNexus[3] = incomingData[5]; // (Removed - 5 Nov 2019 - Aslamah)
 
-      healthRobot[0] = incomingData[6];
-      healthRobot[1] = incomingData[7];
-      healthRobot[2] = incomingData[8];
-      healthRobot[3] = incomingData[9];
+      healthNexus[0] = incomingData[1];
+      healthNexus[1] = incomingData[2];
+      healthNexus[2] = incomingData[3];
+      healthNexus[3] = incomingData[4];
 
-      healthRobot[4] = incomingData[10];
-      healthRobot[5] = incomingData[11];
-      healthRobot[6] = incomingData[12];
-      healthRobot[7] = incomingData[13];
+      // healthRobot[0] = incomingData[6];
+      // healthRobot[1] = incomingData[7];
+      // healthRobot[2] = incomingData[8];
+      // healthRobot[3] = incomingData[9];
+      //
 
-      towerStatus[1] = 0x0F & (incomingData[14]>>0);      // This can be cleaned up because you just need the and for the first one and the shift for the second but I like the consistency.
-      towerStatus[2] = 0x0F & (incomingData[14]>>4);
+      // (Removed - 5 Nov 2019 - Aslamah)
+      // healthRobot[4] = incomingData[10];
+      // healthRobot[5] = incomingData[11];
+      // healthRobot[6] = incomingData[12];
+      // healthRobot[7] = incomingData[13];
+
+      // (Removed - 5 Nov 2019 - Aslamah)
+      // towerStatus[1] = 0x0F & (incomingData[14]>>0);      // This can be cleaned up because you just need the and for the first one and the shift for the second but I like the consistency.
+      // towerStatus[2] = 0x0F & (incomingData[14]>>4);
    }
 
     if(reset){
       ESP.restart();
     }
-    
+
    // end parse
    //------------------------------------------------------------------------
 
@@ -491,12 +502,12 @@ void loop() {
   }
   ShowHealth(health); //set the LEDs for the health
 
-  Serial.print("health: "); 
+  Serial.print("health: ");
   Serial.println(health);
 
   delay(FLASHHALFPERIOD/2);  // wait a bit so the LEDs don't cycle too fast
   FastLEDshowESP32(); //Actually send the values to the ring
-  
+
   FastLED.delay(1000/FRAMES_PER_SECOND); // insert a delay to keep the framerate modest
 }
 
@@ -504,7 +515,8 @@ void loop() {
 void sendButtonPress(){
   // send the TCP packet when button pressed
       if(buttonPressedFlag){
-        char packet[] = {WASHIT, buttonPressedTime, buttonPressedTime>>(8*1), buttonPressedTime>>(8*2), buttonPressedTime>>(8*3)};
+        //char packet[] = {WASHIT, buttonPressedTime, buttonPressedTime>>(8*1), buttonPressedTime>>(8*2), buttonPressedTime>>(8*3)}; // (Removed - 5 Nov 2019 - Aslamah)
+        char packet[] = {WASHIT}; // (Added - 5 Nov 2019 - Aslamah)
         buttonPressedFlag = 0;  //clear flag
         Serial.println(buttonPressedTime);
         //cli = serverSend.available();
@@ -520,6 +532,3 @@ void sendButtonPress(){
         cli.stop();
       }
 }
-
-
-
