@@ -21,7 +21,7 @@ def handle_key(arena):
             print("Who attacks? Red 1-4, Blue 5-8")
             k1 = keyInput()
             k1 = int(k1)
-            if not 1 <= k1 <= 8:
+            if not 1 <= k1 <= 7:
                 raise ValueError
         except:
             print('expected an integer between 1 and 8')
@@ -31,7 +31,7 @@ def handle_key(arena):
         if k1 < 4:
             robAtt = arena.redTeam.robots[k1]
             teamAtt = arena.redTeam
-        elif k1 < 8:
+        elif k1 < 7:
             robAtt = arena.blueTeam.robots[k1-4]
             teamAtt = arena.blueTeam
 

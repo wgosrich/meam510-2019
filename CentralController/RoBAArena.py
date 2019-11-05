@@ -392,7 +392,7 @@ class Arena:
             np.uint8(location[7]),
             np.uint8(towerByte),
             np.uint8(self.redTeam.number),
-            np.uint8(self.blueTeam.number), 
+            np.uint8(self.blueTeam.number),
             np.uint8(128 + 2)) # why does Diego terminate with 10000010?? seems like it should be 128+1
 
         return outputString
@@ -563,7 +563,8 @@ class Arena:
             rob.captureState = 1
             teamInd = (robMsgTuple[0]>>1) & 0b1
             rob.captureTeam = 'BLUE' if teamInd else 'RED'
-            self.teams[teamInd].nexus.eventQ.add_hit(rob.hitDamage) #(To check - 2 Nov 2019 - Aslamah)
+            # redteam is 0, blueteam is 1, so whoever captured should damage the other
+            self.teams[abs(teamInd-1)].nexus.eventQ.add_hit(rob.hitDamage) #(To check - 2 Nov 2019 - Aslamah)
             self.logL.write("\n    Hit: from " + rob.CaptureTeam + "Tower against other Nexus")
 
             return 1

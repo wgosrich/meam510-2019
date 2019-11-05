@@ -293,13 +293,14 @@ class Tower:
         Args:
             DPS (TYPE): Description
             captureState (bool, optional): Description
-            capturePercentage (int, optional): Description
+            #capturePercentage (int, optional): Description (Removed - 5 Nov 2019 - Aslamah)
         """
         self.DPS = DPS
         self.hitDamage = DPS/params.towerHitRate
         self.captureState = captureState
-        self.capturePercentage = capturePercentage
+        #self.capturePercentage = capturePercentage (Removed - 5 Nov 2019 - Aslamah)
         self.captureTeam = None
+        self.isDamaging = False # (Added - 5 Nov 2019 - Aslamah)
         self.isActive = False
         self.ID = ID
         self.isCooldownHit = False
@@ -308,7 +309,7 @@ class Tower:
 
     def resume_from_pause(self, timePassed):
         pass
-        
+
     def is_captured(self):
         """Returns if the tower is captured
 
@@ -322,10 +323,10 @@ class Tower:
 
         Args:
             state (int): -1,0,1
-            percent (int): - 100 to 100
+            #percent (int): - 100 to 100 (Removed - 5 Nov 2019 - Aslamah)
         """
         self.captureState = state
-        self.capturePercentage = percent
+        #self.capturePercentage = percent (Removed - 5 Nov 2019 - Aslamah)
 
 class Nexus:
 
