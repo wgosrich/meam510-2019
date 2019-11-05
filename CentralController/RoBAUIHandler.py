@@ -111,9 +111,10 @@ def handle_key(arena):
         print("Sending reset")
         arena.demandReset = 1
 
-    elif k == b'S':
-        print("Forcing Sync")
-        arena.forceSync = 1
+    # (Removed - 5 Nov 2019 - Aslamah)
+    # elif k == b'S':
+    #     print("Forcing Sync")
+    #     arena.forceSync = 1
     else:
         print("Unknown command input from USER: ", k)
 

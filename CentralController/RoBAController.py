@@ -32,15 +32,15 @@ try:
     # Create UDP State Update Loop Thread, which sends 4 times a second
     udpUpdateLoop = RoBAThreading.UDPBroadcastLoop(arena, port=5555, delay=0.25)
     tcpServerLoop = RoBAThreading.RoBATCPListener(ipAddress, arena, port=4444)
-    syncServerLoop = RoBAThreading.SyncServer(ipAddress, arena, port=3333, timeout=10)
+    #syncServerLoop = RoBAThreading.SyncServer(ipAddress, arena, port=3333, timeout=10) (Removed - 5 Nov 2019 - Aslamah)
     stateLog = TextGUI(arena)
     # udpUpdateLoop.listenOnly = 1
     # syncServerLoop.listenOnly = 1
 
     udpUpdateLoop.start()
     tcpServerLoop.start()
-    syncServerLoop.start()
-    syncServerLoop.logL.start()
+    #syncServerLoop.start() (Removed - 5 Nov 2019 - Aslamah)
+    #syncServerLoop.logL.start() (Removed - 5 Nov 2019 - Aslamah)
     arena.logL.start()
     stateLog.start()
 

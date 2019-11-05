@@ -300,7 +300,6 @@ class Tower:
         self.captureState = captureState
         #self.capturePercentage = capturePercentage (Removed - 5 Nov 2019 - Aslamah)
         self.captureTeam = None
-        self.isDamaging = False # (Added - 5 Nov 2019 - Aslamah)
         self.isActive = False
         self.ID = ID
         self.isCooldownHit = False

@@ -92,8 +92,8 @@ class Arena:
 
         self.lastHeartbeat = time.time()
         self.hbDelay = 1
-        self.sync = 0
-        self.forceSync = 0
+        #self.sync = 0 (Removed - 5 Nov 2019 - Aslamah)
+        #self.forceSync = 0 (Removed - 5 Nov 2019 - Aslamah)
         self.demandReset = 0
 
         self.gameStartTime = datetime.now()
@@ -319,10 +319,12 @@ class Arena:
         """
         #FIXME Debug code need these to come from the robots WHAT IS RESET
 
-        infoByte = (np.uint8(self.sync << 3) + \
-                   np.uint8(self.autonomousMode << 2) +  \
-                   np.uint8(self.demandReset << 1) +  \
-                   np.uint8(self.isGameOn << 0))
+        infoByte = \
+                    #(np.uint8(self.sync << 3) + \ (Removed - 5 Nov 2019 - Aslamah)
+                    np.uint8(1) + # (Added - 5 Nov 2019 - Aslamah)
+                    np.uint8(self.autonomousMode << 2) +  \
+                    np.uint8(self.demandReset << 1) +  \
+                    np.uint8(self.isGameOn << 0))
         cooldownByte = 0
         for ind, rob in enumerate(self.robots):
             cooldownByte += (rob.isCooldownHit<<ind)
