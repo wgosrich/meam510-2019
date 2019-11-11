@@ -1,7 +1,6 @@
 Insert summary & location (filename and approximate line) of issues here:
 
-- Reflected damage from nexus
-- Handling Tower capturePercentage
+- Handling Tower capturePercentage 
 - Updating tower & nexus classes
 - reaper stuff in eventQ
 - will we use eventQ at all if we are going by status updates instead? (Walker - 3 Nov 2019)
