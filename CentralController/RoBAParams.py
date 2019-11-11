@@ -61,4 +61,4 @@ class RoBAParams:
         Returns:
             int : starting health based on weight
         """
-        return max(10/(weight + 0.5), self.robotMinStartHealth)
+        return max(20/(weight + 0.5), self.robotMinStartHealth)

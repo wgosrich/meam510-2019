@@ -19,7 +19,7 @@ import shutil
 
 
 # arena = Arena('friendly2.csv', 1, 2)
-arena = Arena('teamsTest2.csv', 1, 2)
+arena = Arena('Teaminfo-downloadascsv.csv', 1, 2)
 # arena = Arena('networkTest.csv', 1, 2)
 
 
