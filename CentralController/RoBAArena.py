@@ -319,9 +319,9 @@ class Arena:
         """
         #FIXME Debug code need these to come from the robots WHAT IS RESET
 
-        infoByte = \
-                    #(np.uint8(self.sync << 3) + \ (Removed - 5 Nov 2019 - Aslamah)
-                    np.uint8(1) + # (Added - 5 Nov 2019 - Aslamah)
+                    # (Added - 5 Nov 2019 - Aslamah)
+                    #(np.uint8(self.sync << 3) +  (Removed - 5 Nov 2019 - Aslamah)
+        infoByte =  (np.uint8(1) + \
                     np.uint8(self.autonomousMode << 2) +  \
                     np.uint8(self.demandReset << 1) +  \
                     np.uint8(self.isGameOn << 0))
