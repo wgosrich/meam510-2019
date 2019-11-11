@@ -204,7 +204,7 @@ class RobotEventsQueue:
         self.bufferSize = 500 #5000
         self.bufferOverlap = 100 #1000
         self.reaperID = 1111
-        self.healerID = 2222
+        #self.healerID = 2222 # (Removed - 11 Nov 2019 - Aslamah)
         #self.columns = 3 # timestamp, hitterID, hitterDamage (Removed - 2 Nov 2019 - Aslamah)
         self.columns = 1 # hitterDamage = 1 (Added - 2 Nov 2019 - Aslamah)
         self.buff = np.full([self.bufferSize, self.columns], np.nan)
