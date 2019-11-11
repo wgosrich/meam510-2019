@@ -298,7 +298,7 @@ class Tower:
         self.DPS = DPS
         self.hitDamage = DPS/params.towerHitRate
         self.captureState = captureState
-        #self.capturePercentage = capturePercentage (Removed - 5 Nov 2019 - Aslamah)
+        self.capturePercentage = capturePercentage
         self.captureTeam = None
         self.isActive = False
         self.ID = ID
@@ -325,7 +325,7 @@ class Tower:
             #percent (int): - 100 to 100 (Removed - 5 Nov 2019 - Aslamah)
         """
         self.captureState = state
-        #self.capturePercentage = percent (Removed - 5 Nov 2019 - Aslamah)
+        self.capturePercentage = percent
 
 class Nexus:
 

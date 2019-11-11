@@ -93,6 +93,7 @@ class Arena:
         self.lastHeartbeat = time.time()
         self.hbDelay = 1
         #self.sync = 0 (Removed - 5 Nov 2019 - Aslamah)
+        self.sync = 1 # (Adde - 11 Nov 2019 - Aslamah)
         #self.forceSync = 0 (Removed - 5 Nov 2019 - Aslamah)
         self.demandReset = 0
 
@@ -326,8 +327,9 @@ class Arena:
                     np.uint8(self.demandReset << 1) +  \
                     np.uint8(self.isGameOn << 0))
         cooldownByte = 0
-        for ind, rob in enumerate(self.robots):
-            cooldownByte += (rob.isCooldownHit<<ind)
+        # (Removed - 11 Nov 2019 - Aslamah)
+        # for ind, rob in enumerate(self.robots):
+        #     cooldownByte += (rob.isCooldownHit<<ind)
 
 
 

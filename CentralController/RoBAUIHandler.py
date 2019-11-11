@@ -57,7 +57,8 @@ def handle_key(arena):
         else:
             robDef = arena.nexuses[k2-8]
 
-        if robAtt.isActive and robDef.isActive and not robAtt.isCooldownHit:
+        #if robAtt.isActive and robDef.isActive and not robAtt.isCooldownHit: (Removed - 11 Nov 2019 - Aslamah)
+        if robAtt.isActive and robDef.isActive:
 
             robDef.eventQ.add_hit(-1)# byWhom=robAtt.ID, damage=robAtt.hitDamage)
             teamAtt.hitQ.add_hit(robDef.eventQ.buff[robDef.eventQ.hitInd-1, 0],
@@ -149,12 +150,12 @@ class TextGUI(LogLoop):
 
                 for enum, rob in enumerate(arena.redTeam.robots):
                     health[enum] = rob.health
-                    coolHit[enum] = rob.isCooldownHit
-                    coolHeal[enum] = rob.isCooldownHeal
+                    #coolHit[enum] = rob.isCooldownHit (Removed - 11 Nov 2019 - Aslamah)
+                    #coolHeal[enum] = rob.isCooldownHeal (Removed - 11 Nov 2019 - Aslamah)
                 for enum, rob in enumerate(arena.blueTeam.robots):
                     health[enum+4] = rob.health
-                    coolHit[enum+4] = rob.isCooldownHit
-                    coolHeal[enum+4] = rob.isCooldownHeal
+                    #coolHit[enum+4] = rob.isCooldownHit (Removed - 11 Nov 2019 - Aslamah)
+                    #coolHeal[enum+4] = rob.isCooldownHeal (Removed - 11 Nov 2019 - Aslamah)
 
 
                 output = f"""
