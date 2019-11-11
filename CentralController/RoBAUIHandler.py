@@ -93,20 +93,21 @@ def handle_key(arena):
             #rob.eventQ.add_hit(-1, 6666, 1000) (Removed - 2 Nov 2019 - Aslamah)
             rob.eventQ.add_hit(1000) # a very large damage to kill (Added - 2 Nov 2019 - Aslamah)
 
-    elif k == b'H' or k == 'H' or k == 'h':
-
-        try:
-            print("Heal who? Red 1-4, Blue 5-8")
-            k1 = keyInput()
-            k1 = int(k1)
-            if not 1 <= k1 <= 8:
-                raise ValueError
-        except:
-            print('expected an integer between 1 and 8')
-            return 0
-        rob = arena.robots[k1-1]
-        if rob.isActive and not rob.isCooldownHeal:
-            rob.eventQ.add_heal(-1)
+    # (Removed - 11 Nov 2019 - Aslamah)
+    # elif k == b'H' or k == 'H' or k == 'h':
+    #
+    #     try:
+    #         print("Heal who? Red 1-4, Blue 5-8")
+    #         k1 = keyInput()
+    #         k1 = int(k1)
+    #         if not 1 <= k1 <= 8:
+    #             raise ValueError
+    #     except:
+    #         print('expected an integer between 1 and 8')
+    #         return 0
+    #     rob = arena.robots[k1-1]
+    #     if rob.isActive and not rob.isCooldownHeal:
+    #         rob.eventQ.add_heal(-1)
 
     elif k == b'R' or k == 'R' or k == 'r':
         print("Sending reset")

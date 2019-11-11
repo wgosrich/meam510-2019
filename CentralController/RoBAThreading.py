@@ -322,7 +322,8 @@ class UDPBroadcastLoop(ProtectedLoop):
         self.udpServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         self.udpServer.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         self.udpServer.settimeout(1)
-        self.udpServer.bind((self.ipAddress, port))
+        #self.udpServer.bind((self.ipAddress, port)) # (Removed - 11 Nov 2019 - Aslamah)
+        self.udpServer.bind(("", port)) # (Added - 11 Nov 2019 - Aslamah)
 
         self.listenOnly = 0
         self.lastSend = time.time()
@@ -346,7 +347,6 @@ class UDPBroadcastLoop(ProtectedLoop):
             with self.arena.lock:
                 self.arena.update()
                 if not self.listenOnly:
-                    # self.arena.logL.write(datetime.now().strftime("%H:%M:%S:%f"))
                     self.udpServer.sendto(self.arena.get_message(), ('<broadcast>', self.port))
                     # self.arena.logL.write(datetime.now().strftime("%H:%M:%S:%f")+"\n")
         else:
