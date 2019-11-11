@@ -119,63 +119,65 @@ class HitQueue:
                 their event queue based on hitQueue
         """
 
+        # (Removed - 11 Nov 2019 - Aslamah)
         # For each robot, pull out the robot event queue and update
-        for i, rob in enumerate(robList):
-            if not rob.isActive:
-                continue
-            rEQ = rob.eventQ
+        # for i, rob in enumerate(robList):
+        #     if not rob.isActive:
+        #         continue
+        #     rEQ = rob.eventQ
+        #
+        #     # From the robot event buffers, pull all the unassigned "washits"
+        #     # unassigned hits have hitterID = -1
+        #     unassignedWasHitInds = np.where(rEQ.get_buff()[:, 1] == -1)[0]
+        #
+        #     # Pull those for easy access
+        #     unassignedWasHit = rEQ.get_buff()[unassignedWasHitInds, :]
+        #
+        #     # For all the detected "washits"
+        #     for j, wasHitTime in np.ndenumerate(unassignedWasHit[:, 0]):
+        #
+        #         # Get the current indices of all the unused hits
+        #         # The unused hits have defenderID = -1
+        #         unusedInds = np.where(self.buff[:, 3] == -1)[0]
+        #         if np.min(unusedInds.shape) == 0:
+        #             break
+        #
+        #         # Get a copy of the array using only the unused indices
+        #         unused = self.buff[unusedInds, : ]
+        #
+        #         # Assuming the list is sorted find the furthest left location
+        #         # where inserting hitTime would not affect the sort then save
+        #         # that and the previous element (the elements closest to hitTime)                #
+        #         inds = np.array([-1, 0]) + np.searchsorted(unused[:, 0], wasHitTime)
+        #
+        #         # Clip the unwanted negative and greater than maximum inds
+        #         inds = np.clip(inds, 0, unused.shape[0]-1)
+        #
+        #         # From the to nearest inds which is the closest the time
+        #         nearest = np.argmin(np.abs(unused[inds, 0]- wasHitTime))
+        #         if self.check_thresh(unused[inds, 0][nearest], wasHitTime):
+        #
+        #             # Assign a robID (1) and a robDam (2) to the "wasHit"
+        #             timestamp = unused[inds[nearest], 0]
+        #             attackerID = unused[inds[nearest], 1]
+        #             attackerDamage = unused[inds[nearest], 2]
+        #
+        #             rEQ.buff[unassignedWasHitInds[j], 1] =  attackerID #id
+        #             rEQ.buff[unassignedWasHitInds[j], 2] =  attackerDamage #damage
+        #
+        #             # Assign robot to the defenderID
+        #             self.buff[unusedInds[inds[nearest]], 3] = robList[i].ID
 
-            # From the robot event buffers, pull all the unassigned "washits"
-            # unassigned hits have hitterID = -1
-            unassignedWasHitInds = np.where(rEQ.get_buff()[:, 1] == -1)[0]
+                    # try:
+                    #     if rob.reflectedMulti:
+                    #         for rob in arena.robots:
+                    #             if rob.ID == attackerID:
+                    #                 rob.eventQ.add_hit(timestamp, byWhom=rob.ID, damage=rob.reflectedMulti * attackerDamage )
+                    #                 break
+                    # except:
+                    #     pass
 
-            # Pull those for easy access
-            unassignedWasHit = rEQ.get_buff()[unassignedWasHitInds, :]
-
-            # For all the detected "washits"
-            for j, wasHitTime in np.ndenumerate(unassignedWasHit[:, 0]):
-
-                # Get the current indices of all the unused hits
-                # The unused hits have defenderID = -1
-                unusedInds = np.where(self.buff[:, 3] == -1)[0]
-                if np.min(unusedInds.shape) == 0:
-                    break
-
-                # Get a copy of the array using only the unused indices
-                unused = self.buff[unusedInds, : ]
-
-                # Assuming the list is sorted find the furthest left location
-                # where inserting hitTime would not affect the sort then save
-                # that and the previous element (the elements closest to hitTime)                #
-                inds = np.array([-1, 0]) + np.searchsorted(unused[:, 0], wasHitTime)
-
-                # Clip the unwanted negative and greater than maximum inds
-                inds = np.clip(inds, 0, unused.shape[0]-1)
-
-                # From the to nearest inds which is the closest the time
-                nearest = np.argmin(np.abs(unused[inds, 0]- wasHitTime))
-                if self.check_thresh(unused[inds, 0][nearest], wasHitTime):
-
-                    # Assign a robID (1) and a robDam (2) to the "wasHit"
-                    timestamp = unused[inds[nearest], 0]
-                    attackerID = unused[inds[nearest], 1]
-                    attackerDamage = unused[inds[nearest], 2]
-
-                    rEQ.buff[unassignedWasHitInds[j], 1] =  attackerID #id
-                    rEQ.buff[unassignedWasHitInds[j], 2] =  attackerDamage #damage
-
-                    # Assign robot to the defenderID
-                    self.buff[unusedInds[inds[nearest]], 3] = robList[i].ID
-
-                    try:
-                        if rob.reflectedMulti:
-                            for rob in arena.robots:
-                                if rob.ID == attackerID:
-                                    rob.eventQ.add_hit(timestamp, byWhom=rob.ID, damage=rob.reflectedMulti * attackerDamage )
-                                    break
-                    except:
-                        pass
-
+        return
 
 
 
@@ -261,7 +263,7 @@ class RobotEventsQueue:
             self.hitInd = self.bufferOverlap
             self.hitQueue = np.concatenate([self.hitQueue, self.buff[0:-self.bufferOverlap, :]],
                                            axis=0)
-            self.buff[:self.bufferOverlap, :] = self.buff[-self.bufferOverlap:, :] 
+            self.buff[:self.bufferOverlap, :] = self.buff[-self.bufferOverlap:, :]
             self.buff[self.bufferOverlap:, :] = np.nan
 
     def add_heal(self, timestamp):
@@ -293,32 +295,36 @@ class RobotEventsQueue:
         Returns:
             TYPE: Description
         """
-        lastDeathInd = np.where(self.buff[:, 1] == self.reaperID)[0]
+        # lastDeathInd = np.where(self.buff[:, 1] == self.reaperID)[0] # (Removed - 11 Nov 2019 - Aslamah)
         # print ("last death ind ", lastDeathInd)
-        if not lastDeathInd.any():
-            lastDeathInd = np.where(self.hitQueue[:, 1] == self.reaperID)[0]
-            if not lastDeathInd.any():
-                # print("Damage no death")
-                # print(self.hitQueue[:, 2])
-                # print(self.buff[:, 2])
-                if self.hitQueue.shape[1]:
-                    damage = np.nansum(self.hitQueue[:-self.bufferOverlap, 2]) + np.nansum(self.buff[:, 2])
-                else:
-                    damage = np.nansum(self.buff[:, 2])
-            else:
-                damage = (np.nansum(self.hitQueue[max(lastDeathInd):-self.bufferOverlap, 2]) +
-                          np.nansum(self.buff[:, 2]))
-        else:
-            damage = np.nansum(self.buff[max(lastDeathInd):, 2])
+        # if not lastDeathInd.any():
+        #     lastDeathInd = np.where(self.hitQueue[:, 1] == self.reaperID)[0]
+        #     if not lastDeathInd.any():
+        #         # print("Damage no death")
+        #         # print(self.hitQueue[:, 2])
+        #         # print(self.buff[:, 2])
+        #         if self.hitQueue.shape[1]:
+        #             damage = np.nansum(self.hitQueue[:-self.bufferOverlap, 2]) + np.nansum(self.buff[:, 2])
+        #         else:
+        #             damage = np.nansum(self.buff[:, 2])
+        #     else:
+        #         damage = (np.nansum(self.hitQueue[max(lastDeathInd):-self.bufferOverlap, 2]) +
+        #                   np.nansum(self.buff[:, 2]))
+        # else:
+        #     damage = np.nansum(self.buff[max(lastDeathInd):, 2])
+
+        # (Added - 11 Nov 2019 - Aslamah)
+        damage = np.nansum(self.buff[:, 0]) # Sum of damages
         return damage
 
-    def get_buff(self):
-        """Summary
-
-        Returns:
-            TYPE: Description
-        """
-        return self.buff[~np.isnan(self.buff[:, 1]), :]
+    # (Removed - 11 Nov 2019 - Aslamah)
+    # def get_buff(self):
+    #     """Summary
+    #
+    #     Returns:
+    #         TYPE: Description
+    #     """
+    #     return self.buff[~np.isnan(self.buff[:, 1]), :]
 
     def get_full(self):
         """Summary
@@ -326,6 +332,10 @@ class RobotEventsQueue:
         Returns:
             TYPE: Description
         """
-        fullList = np.concatenate([self.hitQueue, self.buff[0:-self.bufferOverlap, :]], axis=0)
-        fullList = fullList[~np.isnan(fullList[:, 1]), :]
+        # (Removed - 11 Nov 2019 - Aslamah)
+        # fullList = np.concatenate([self.hitQueue, self.buff[0:-self.bufferOverlap, :]], axis=0)
+        # fullList = fullList[~np.isnan(fullList[:, 1]), :]
+        # (Added - 11 Nov 2019 - Aslamah)
+        fullList = np.concatenate([self.buff[0:-self.bufferOverlap, :]], axis=0)
+        fullList = fullList[~np.isnan(fullList[:, 0]), :]
         return fullList

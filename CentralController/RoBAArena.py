@@ -241,25 +241,28 @@ class Arena:
             if currTime - self.gameStartTime > timedelta(seconds=self.params.autonomousStartTime):
                 self.autonomousMode = 0
 
-            self.redTeam.hitQ.update(self.blueTeam.robots + [self.blueTeam.nexus], self)
-            self.blueTeam.hitQ.update(self.redTeam.robots + [self.redTeam.nexus], self)
+            # (Removed - 11 Nov 2019 - Aslamah)
+            # self.redTeam.hitQ.update(self.blueTeam.robots + [self.blueTeam.nexus], self)
+            # self.blueTeam.hitQ.update(self.redTeam.robots + [self.redTeam.nexus], self)
 
             self.update_healths()
 
-            for rob in self.robots:
+            # (Removed - 11 Nov 2019 - Aslamah)
+            # for rob in self.robots:
 
-                if rob.health == 0:
-                    if (currTime - rob.lastDeathTime) >= timedelta(seconds=respawnTime):
-                        rob.health = self.params.robotMaxHealth
-                        rob.isActive = True
-                else:
-                    rob.isActive = True
+                # if rob.health == 0:
+                #     if (currTime - rob.lastDeathTime) >= timedelta(seconds=respawnTime):
+                #         rob.health = self.params.robotMaxHealth
+                #         rob.isActive = True
+                # else:
+                #     rob.isActive = True
+                #
+                # if (currTime - rob.lastHitTime) >= timedelta(seconds=rob.hitDelay):
+                #     rob.isCooldownHit = False
 
-                if (currTime - rob.lastHitTime) >= timedelta(seconds=rob.hitDelay):
-                    rob.isCooldownHit = False
-
-                if (currTime - rob.lastHealTime) >= timedelta(seconds=rob.healDelay):
-                    rob.isCooldownHeal = False
+                # (Removed - 11 Nov 2019 - Aslamah)
+                # if (currTime - rob.lastHealTime) >= timedelta(seconds=rob.healDelay):
+                #     rob.isCooldownHeal = False
 
 
 
@@ -465,8 +468,10 @@ class Arena:
         print("Blue Team")
         print(self.blueTeam.hitQ.get_full())
         print("______________________")
-        for rob in (self.redTeam.robots+[self.redTeam.nexus]+
-                    self.blueTeam.robots+[self.blueTeam.nexus]):
+        # (Removed - 11 Nov 2019 - Aslamah)
+        # for rob in (self.redTeam.robots+[self.redTeam.nexus]+
+        #             self.blueTeam.robots+[self.blueTeam.nexus]):
+        for rob in ([self.redTeam.nexus]+[self.blueTeam.nexus]):
             print(rob.ID, " : ")
             print(rob.eventQ.get_full())
             print("Damage: ", rob.eventQ.get_damage())

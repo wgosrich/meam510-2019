@@ -9,13 +9,13 @@ keyInput = getch()
 
 def handle_key(arena):
     k = keyInput()
-    if k == b'Q' or k == b'\x03' or k == b'\x1b' or k == b'\x11':
+    if k == b'Q' or k == b'\x03' or k == b'\x1b' or k == b'\x11' or k == 'Q' or k == 'q':
         raise KeyboardInterrupt
 
-    elif k == b' ':
+    elif k == b' ' or k == ' ':
         arena.start_pause()
 
-    elif k == b'D':
+    elif k == b'D' or k == 'D' or k == 'd':
 
         try:
             print("Who attacks? Red 1-4, Blue 5-8")
@@ -67,7 +67,7 @@ def handle_key(arena):
         else:
             print("Robot Inactive")
 
-    elif k == b'K':
+    elif k == b'K' or k == 'K' or k == 'k':
 
         try:
             print("Kill who? Red 1-4, Blue 5-8, Nexuses 9-0")
@@ -93,7 +93,7 @@ def handle_key(arena):
             #rob.eventQ.add_hit(-1, 6666, 1000) (Removed - 2 Nov 2019 - Aslamah)
             rob.eventQ.add_hit(1000) # a very large damage to kill (Added - 2 Nov 2019 - Aslamah)
 
-    elif k == b'H':
+    elif k == b'H' or k == 'H' or k == 'h':
 
         try:
             print("Heal who? Red 1-4, Blue 5-8")
@@ -108,7 +108,7 @@ def handle_key(arena):
         if rob.isActive and not rob.isCooldownHeal:
             rob.eventQ.add_heal(-1)
 
-    elif k == b'R':
+    elif k == b'R' or k == 'R' or k == 'r':
         print("Sending reset")
         arena.demandReset = 1
 

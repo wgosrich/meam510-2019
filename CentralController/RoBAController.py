@@ -59,21 +59,21 @@ except Exception as err:
 finally:
     udpUpdateLoop.shutdownFlag.set()
     tcpServerLoop.shutdownFlag.set()
-    syncServerLoop.shutdownFlag.set()
-    syncServerLoop.logL.shutdownFlag.set()
+    #syncServerLoop.shutdownFlag.set() # (Removed - 11 Nov 2019 - Aslamah)
+    #syncServerLoop.logL.shutdownFlag.set() # (Removed - 11 Nov 2019 - Aslamah)
     arena.logL.shutdownFlag.set()
     stateLog.shutdownFlag.set()
 
     udpUpdateLoop.join()
     tcpServerLoop.join()
-    syncServerLoop.join()
-    syncServerLoop.logL.join()
+    # syncServerLoop.join() # (Removed - 11 Nov 2019 - Aslamah)
+    # syncServerLoop.logL.join() # (Removed - 11 Nov 2019 - Aslamah)
     arena.logL.join()
     stateLog.join()
 
     try:
         shutil.copy2(arena.logL.filename, arena.debugFolder + arena.logL.filename)
-        shutil.copy2(syncServerLoop.logL.filename, arena.debugFolder + syncServerLoop.logL.filename)
+        # shutil.copy2(syncServerLoop.logL.filename, arena.debugFolder + syncServerLoop.logL.filename) # (Removed - 11 Nov 2019 - Aslamah)
     except:
         print("Log copies failed, move manually!")
 

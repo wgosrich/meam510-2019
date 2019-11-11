@@ -182,14 +182,16 @@ class Robot:
 
     # update based on how walker is receiving health info from robots (Added - 2 Nov 2019 - Aslamah)
     def update_health(self):
-        damage = self.eventQ.get_damage()
-        if self.isActive:
-            self.health = max(self.fullHealth - damage, 0)
-            if self.health == 0:
-                print("(" + self.color + str(self.number) + ") " + self.name.decode(), ": Died Gruesomely")
-                self.eventQ.add_reaper()
-                self.lastDeathTime = datetime.now()
-                self.isActive = False
+        # (Removed - 11 Nov 2019 - Aslamah)
+        # damage = self.eventQ.get_damage()
+        # if self.isActive:
+        #     self.health = max(self.fullHealth - damage, 0)
+        #     if self.health == 0:
+        #         print("(" + self.color + str(self.number) + ") " + self.name.decode(), ": Died Gruesomely")
+        #         self.eventQ.add_reaper()
+        #         self.lastDeathTime = datetime.now()
+        #         self.isActive = False
+        return
 
     def hit(self):
         """Summary
