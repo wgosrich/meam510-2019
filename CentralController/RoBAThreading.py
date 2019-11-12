@@ -367,7 +367,6 @@ class UDPReceiverLoop(ProtectedLoop):
         self.delay = delay
         self.port = port
         self.arena = arena
-        self.sock.settimeout(1)
         self.lastRecvTime = time.time()
 
         # Get the current host and IP address
@@ -381,6 +380,7 @@ class UDPReceiverLoop(ProtectedLoop):
         #Note: Instead of blocking, it will throw a socket.error exception if it
         #doesn't get any data
         self.udpServer.setblocking(0)
+        self.udpServer.settimeout(1)
 
     def prot_loop_startup(self):
         """Summary
@@ -391,14 +391,14 @@ class UDPReceiverLoop(ProtectedLoop):
         """Summary
         """
         try:
-            data, address = udpServer.recvfrom(self.bufferSize)
+            data, address = self.udpServer.recvfrom(self.bufferSize)
             with self.arena.lock:
                 self.arena.receive_tophat_message(data, address)
 
         except socket.error:
             pass
 
-        sleep(0.1)
+        time.sleep(0.1)
 
     def prot_loop_shutdown(self):
         """Summary
