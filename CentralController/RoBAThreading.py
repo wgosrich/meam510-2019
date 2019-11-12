@@ -359,6 +359,56 @@ class UDPBroadcastLoop(ProtectedLoop):
         self.udpServer.close()
         print('Thread #%s stopped: UDP broadcast loop' % self.ident)
 
+# (Added - 11 Nov 2019 - Aslamah)
+class UDPReceiverLoop(ProtectedLoop):
+    def __init__(self, arena, port=5551, delay=0.1):
+        ProtectedLoop.__init__(self)
+
+        self.delay = delay
+        self.port = port
+        self.arena = arena
+        self.sock.settimeout(1)
+        self.lastRecvTime = time.time()
+
+        # Get the current host and IP address
+        self.ipAddress = get_host_name_IP()[1]
+        self.bufferSize = 1024
+
+        # Create UDPserver for syncing
+        self.udpServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+        self.udpServer.bind((self.ipAddress, port)) # (Removed - 11 Nov 2019 - Aslamah)
+        #Prevent the socket from blocking until it receives all the data it wants
+        #Note: Instead of blocking, it will throw a socket.error exception if it
+        #doesn't get any data
+        self.udpServer.setblocking(0)
+
+    def prot_loop_startup(self):
+        """Summary
+        """
+        print('Thread #%s started: UDP receive loop' % self.ident)
+
+    def prot_loop_run(self):
+        """Summary
+        """
+        try:
+            data, address = udpServer.recvfrom(self.bufferSize)
+            with self.arena.lock:
+                self.arena.receive_tophat_message(data, address)
+
+        except socket.error:
+            pass
+
+        sleep(0.1)
+
+    def prot_loop_shutdown(self):
+        """Summary
+        """
+        # ... Clean shutdown code here ...
+        self.udpServer.close()
+        print('Thread #%s stopped: UDP receiver loop' % self.ident)
+
+
+
 class SyncServer(ThreadedTCPServer):
     def __init__(self, host, arena, port=3333, timeout=5, delay=1):
         """Summary

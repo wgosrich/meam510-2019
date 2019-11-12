@@ -101,6 +101,10 @@ class Robot:
         self.isActive = False
         self.reset()
 
+        # (Added - 11 Nov 2019 - Aslamah)
+        self.xLocation = 0
+        self.yLocation = 0
+
         # Const Stats
         #self.hitDelay = float(desHitDelay) (Removed - 2 Nov 2019 - Aslamah)
         #self.healDelay = params.healDelay (Removed - 2 Nov 2019 - Aslamah)

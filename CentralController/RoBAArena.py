@@ -5,6 +5,7 @@
 from datetime import datetime, timedelta
 import time
 import numpy as np
+import math
 import struct
 from threading import Lock as TLock
 from RoBAParams import RoBAParams
@@ -403,6 +404,21 @@ class Arena:
             np.uint8(128 + 2)) # why does Diego terminate with 10000010?? seems like it should be 128+1
 
         return outputString
+
+
+    # (Added - 11 Nov 2019 - Aslamah)
+    def receive_tophat_message(self, data, address):
+        rob, ind = rob_who_IP(address)
+
+        message = []
+        for i in range(8):
+            message.append(data >> i & 0b1)
+
+        rob.isActive = False if (message[0]) else True
+        rob.health = int(message[1] | message[2] << 1 | message[3] << 2 | message[4] << 3 | message[5] << 4)
+        rob.xLocation = int(message[8] | message[9] << 1 | message[10] << 2 | message[11] << 3)
+        rob.yLocation = int(message[12] | message[13] << 1 | message[14] << 2 | message[15] << 3)
+
 
     def get_fake_message(self):
         """Summary
