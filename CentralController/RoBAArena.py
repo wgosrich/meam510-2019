@@ -124,7 +124,7 @@ class Arena:
         # RobotID: Unique identifier
         # RobotName
         # Weight
-        # DesCooldown
+        # DesCooldown # (Removed - 12 Nov 2019 - Aslamah)
 
         numTeams = np.amax(data['MetaTeamNumber'])
 
@@ -274,8 +274,9 @@ class Arena:
 
 
     def update_healths(self):
-        for rob in self.robots+self.nexuses:
-            rob.update_health() #update based on new architecture (Added - 2 Nov 2019 - Aslamah)
+        # for rob in self.robots+self.nexuses: # (Removed - 12 Nov 2019 - Aslamah)
+        for rob in self.nexuses: # (Added - 12 Nov 2019 - Aslamah)
+            rob.update_health()
 
 
     def rob_who_IP(self, IP):

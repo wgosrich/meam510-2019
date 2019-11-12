@@ -76,7 +76,8 @@ class Robot:
         self.name = name
         self.ID = ID
 
-        self.IP = ''
+        # self.IP = '' (Removed - 12 Nov 2019 - Aslamah)
+        self.IP = params.ipSubnet + str(params.ipOffset + ID) #  (Added - 12 Nov 2019 - Aslamah)
         #self.eventQ = RobotEventsQueue() (Removed - 2 Nov 2019 - Aslamah)
 
         print("Robot Init  ID: ", end=' ')
