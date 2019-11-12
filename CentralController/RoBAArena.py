@@ -80,8 +80,8 @@ class Arena:
         self.redTeam.nexus.ID = 80
         self.blueTeam.nexus.ID = 81
 
-        self.redTeam.nexus.IP = '192.168.1.80'
-        self.blueTeam.nexus.IP = '192.168.1.81'
+        self.redTeam.nexus.IP = self.params.ipSubnet + '80' # (Added - 12 Nov 2019 - Aslamah)
+        self.blueTeam.nexus.IP = self.params.ipSubnet + '81' # (Added - 12 Nov 2019 - Aslamah)
 
         self.towers = [Tower(self.params.towerDPS, ID=98), Tower(self.params.towerDPS, ID=99)]
 
@@ -407,8 +407,10 @@ class Arena:
 
 
     # (Added - 11 Nov 2019 - Aslamah)
-    def receive_tophat_message(self, data, address):
-        rob, ind = rob_who_IP(address)
+    def receive_tophat_message(self, data, ip):
+        print(ip)
+        print(data)
+        rob, ind = self.rob_who_IP(ip)
 
         message = []
         for i in range(8):

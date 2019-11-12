@@ -21,8 +21,10 @@ def get_host_name_IP():
         STR (0): IP Address, if it fails returns 0
     """
     try:
-        hostName = socket.gethostname()
-        hostIP = socket.gethostbyname(hostName)
+        # hostName = socket.gethostname()
+        # hostIP = socket.gethostbyname(hostName)
+        hostName = "central"
+        hostIP = "192.168.4.2"
         print("Hostname :  ", hostName)
         print("IP : ", hostIP)
         return hostName, hostIP

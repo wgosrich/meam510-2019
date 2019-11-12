@@ -310,7 +310,8 @@ class Tower:
         self.ID = ID
         self.isCooldownHit = False
         self.isActive = False
-        self.IP = '192.168.1.'+ str(ID)
+        #self.IP = '192.168.1.'+ str(ID) # (Removed - 12 Nov 2019 - Aslamah)
+        self.IP = params.ipSubnet + str(ID) # (Added - 12 Nov 2019 - Aslamah)
 
     def resume_from_pause(self, timePassed):
         pass

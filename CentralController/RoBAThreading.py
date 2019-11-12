@@ -361,7 +361,7 @@ class UDPBroadcastLoop(ProtectedLoop):
 
 # (Added - 11 Nov 2019 - Aslamah)
 class UDPReceiverLoop(ProtectedLoop):
-    def __init__(self, arena, port=5551, delay=0.1):
+    def __init__(self, arena, port=10000, delay=0.1):
         ProtectedLoop.__init__(self)
 
         self.delay = delay
@@ -375,12 +375,12 @@ class UDPReceiverLoop(ProtectedLoop):
 
         # Create UDPserver for syncing
         self.udpServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-        self.udpServer.bind((self.ipAddress, port)) # (Removed - 11 Nov 2019 - Aslamah)
+        self.udpServer.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.udpServer.bind((self.ipAddress, port))
         #Prevent the socket from blocking until it receives all the data it wants
         #Note: Instead of blocking, it will throw a socket.error exception if it
         #doesn't get any data
         self.udpServer.setblocking(0)
-        self.udpServer.settimeout(1)
 
     def prot_loop_startup(self):
         """Summary
@@ -393,7 +393,7 @@ class UDPReceiverLoop(ProtectedLoop):
         try:
             data, address = self.udpServer.recvfrom(self.bufferSize)
             with self.arena.lock:
-                self.arena.receive_tophat_message(data, address)
+                self.arena.receive_tophat_message(data, address[0])
 
         except socket.error:
             pass
