@@ -42,7 +42,7 @@ class RoBAParams:
     minDPS = 1
     towerHitRate = 1 #Hz
     ipSubnet = '192.168.1.' # (Added - 12 Nov 2019 - Aslamah)
-    ipOffset = 20 # (Added - 12 Nov 2019 - Aslamah)
+    ipOffset = 100 # (Added - 12 Nov 2019 - Aslamah)
 
 
     def respawn_time_function(self, arena):

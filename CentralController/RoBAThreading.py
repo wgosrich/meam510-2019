@@ -322,8 +322,8 @@ class UDPBroadcastLoop(ProtectedLoop):
         self.udpServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         self.udpServer.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         self.udpServer.settimeout(1)
-        #self.udpServer.bind((self.ipAddress, port)) # (Removed - 11 Nov 2019 - Aslamah)
-        self.udpServer.bind(("", port)) # (Added - 11 Nov 2019 - Aslamah)
+        self.udpServer.bind((self.ipAddress, port)) # (Removed - 11 Nov 2019 - Aslamah)
+        #self.udpServer.bind(("", port)) # (Added - 11 Nov 2019 - Aslamah)
 
         self.listenOnly = 0
         self.lastSend = time.time()
@@ -361,7 +361,7 @@ class UDPBroadcastLoop(ProtectedLoop):
 
 # (Added - 11 Nov 2019 - Aslamah)
 class UDPReceiverLoop(ProtectedLoop):
-    def __init__(self, arena, port=10000, delay=0.1):
+    def __init__(self, arena, port=10000, delay=0.005):
         ProtectedLoop.__init__(self)
 
         self.delay = delay

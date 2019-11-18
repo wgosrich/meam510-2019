@@ -151,9 +151,9 @@ class Arena:
         if (self.lastHeartbeat + self.hbDelay) < time.time() and self.isGameStarted:
 
             if self.isGameOn:
-                print(datetime.now(), '...')
+                print(datetime.now(), '...\n')
             else:
-                print('*** paused')
+                print('*** paused \n')
             self.lastHeartbeat = time.time()
 
 
@@ -409,19 +409,20 @@ class Arena:
 
     # (Added - 11 Nov 2019 - Aslamah)
     def receive_tophat_message(self, data, ip):
-        print(ip)
-        print(data)
         rob, ind = self.rob_who_IP(ip)
 
         message = []
         for i in range(8):
-            message.append(data >> i & 0b1)
+            message.append(data[0] >> i & 0b1)
+        for i in range(8):
+            message.append(data[1] >> i & 0b1)
 
         rob.isActive = False if (message[0]) else True
         rob.health = int(message[1] | message[2] << 1 | message[3] << 2 | message[4] << 3 | message[5] << 4)
         rob.xLocation = int(message[8] | message[9] << 1 | message[10] << 2 | message[11] << 3)
         rob.yLocation = int(message[12] | message[13] << 1 | message[14] << 2 | message[15] << 3)
 
+        print(rob.health)
 
     def get_fake_message(self):
         """Summary
