@@ -21,11 +21,10 @@
 #define W_LENGTH 1                                  // data length for w, [0,DATA_LENGTH]
 #define R_LENGTH 16                                 // data length for r, [0,DATA_LENGTH]
 
-
 #define I2C_MASTER_SCL_IO (gpio_num_t)33            // gpio number for I2C master clock
 #define I2C_MASTER_SDA_IO (gpio_num_t)25            // gpio number for I2C master data
 #define I2C_MASTER_NUM I2C_NUMBER(1)                // I2C port number for master dev
-#define I2C_MASTER_FREQ_HZ 100000                   // I2C master clock frequency
+#define I2C_MASTER_FREQ_HZ 40000                    // I2C master clock frequency (Hz)
 #define I2C_MASTER_TX_BUF_DISABLE 0                 // I2C master doesn't need buffer
 #define I2C_MASTER_RX_BUF_DISABLE 0                 // I2C master doesn't need buffer
 
@@ -89,7 +88,6 @@ static esp_err_t i2c_master_write_slave(i2c_port_t i2c_num, uint8_t *data_wr, si
     i2c_cmd_link_delete(cmd);
     return ret;
 }
-
 
 /**
  * @brief i2c master initialization
@@ -174,9 +172,27 @@ static void i2c_write_test()
             esp_err_to_name(ret));
     }
 }
-
 // =================================================================
 // ========================== I2C end ==============================
+// =================================================================
+
+
+// =================================================================
+// ====================== Interrupt start ==========================
+// =================================================================
+// Timer + Interrupt for reading I2C
+hw_timer_t* timer = NULL;                               // initialize a timer
+portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;   // needed to sync between main loop and ISR when modifying shared variable
+volatile bool readI2C = 0;                              // should we read data from I2C?
+
+void IRAM_ATTR readI2COnTimer()
+{
+    portENTER_CRITICAL_ISR(&timerMux);
+    readI2C = 1;                            // need to read I2C next loop
+    portEXIT_CRITICAL_ISR(&timerMux);
+}
+// =================================================================
+// ======================= Interrupt end ===========================
 // =================================================================
 
 
@@ -189,19 +205,16 @@ FASTLED_USING_NAMESPACE
 
 #define RED             0xFF0000    // color for the red team
 #define BLUE            0x0000FF    // color for the blue team
-#define HEALTHCOLOR     0x00FF00    // color for the health LEDs
-
-#define FLASHHALFPERIOD 250     
-#define READPERIOD      400         // slows down the i2c
+#define HEALTHCOLOR     0x00FF00    // color for the health LEDs   
 
 #if defined(FASTLED_VERSION) && (FASTLED_VERSION < 3001000)
 #warning "Requires FastLED 3.1 or later; check github for latest code."
 #endif
 
 // ===== GAME VARIABLES =====
+// change ROBOTNUM (1-4) and TEAMCOLOR (BLUE or RED) as necessary
 #define ROBOTNUM    4               // robot number on meta team (1-4)
 #define TEAMCOLOR   BLUE            // color for the robot team, either RED or BLUE
-byte MAX_HEALTH     = 255;          // track the max health (starting health) of this robot
 // ==========================
 
 #define DATA_PIN    12              // pin attached to LED ring
@@ -270,7 +283,7 @@ void SetupFastLED(void)
     FastLED.setBrightness(BRIGHTNESS);
 
     int core = xPortGetCoreID();
-    Serial.print("Main code running on core ");
+    Serial.print("FastLED: Main code running on core ");
     Serial.println(core);
 
     // -- Create the FastLED show task
@@ -279,13 +292,10 @@ void SetupFastLED(void)
 
 void ShowRobotNum(void)
 {
-    int flashTime = millis();       // what time is it
-    static int flashTimeOld = 0;    // when was the last toggle
-    static bool ledsOn = 1;         // are the robot number LEDs on
-    int robotLeds[] = {0,6,12,18};  // location of the LEDs used to display the robot number
+    int robotLeds[] = {0,6,12,18};      // location of the LEDs used to display the robot number
 
     // change the LEDs based on the robot number
-    leds[robotLeds[0]] = TEAMCOLOR*ledsOn;  // The first LED is always displayed with the robot number
+    leds[robotLeds[0]] = TEAMCOLOR;     // The first LED is always displayed with the robot number
 
     switch (ROBOTNUM)
     {
@@ -296,18 +306,18 @@ void ShowRobotNum(void)
             break;
         case 2:
             leds[robotLeds[1]] = 0;
-            leds[robotLeds[2]] = TEAMCOLOR*ledsOn;
+            leds[robotLeds[2]] = TEAMCOLOR;
             leds[robotLeds[3]] = 0;
             break;
         case 3:
-            leds[robotLeds[1]] = TEAMCOLOR*ledsOn;
+            leds[robotLeds[1]] = TEAMCOLOR;
             leds[robotLeds[2]] = 0;
-            leds[robotLeds[3]] = TEAMCOLOR*ledsOn;
+            leds[robotLeds[3]] = TEAMCOLOR;
             break;
         case 4:
-            leds[robotLeds[1]] = TEAMCOLOR*ledsOn;
-            leds[robotLeds[2]] = TEAMCOLOR*ledsOn;
-            leds[robotLeds[3]] = TEAMCOLOR*ledsOn;
+            leds[robotLeds[1]] = TEAMCOLOR;
+            leds[robotLeds[2]] = TEAMCOLOR;
+            leds[robotLeds[3]] = TEAMCOLOR;
             break;
     }
 }
@@ -335,12 +345,12 @@ void clearLEDs(void)
 
 void ShowRespawnTimer(int respawnTime)
 {
+    int totalLEDsToTurnOn = map(respawnTime, 0, 15, 0, NUM_LEDS);
     for (int i = 0; i < NUM_LEDS; i++)
     {
-        leds[i] = RED*(respawnTime > i);
+        leds[i] = RED*(totalLEDsToTurnOn > i);
     }
 }
-
 // =================================================================
 // ========================== LED end ==============================
 // =================================================================
@@ -349,7 +359,6 @@ void ShowRespawnTimer(int respawnTime)
 // =====================================================================
 // ============================= SETUP =================================
 // =====================================================================
-
 void setup()
 {
     Serial.begin(115200);
@@ -358,15 +367,23 @@ void setup()
     ESP_ERROR_CHECK(i2c_master_init()); // initialize the i2c
     // ========================== I2C end ==============================
 
+    // ===================== Interrupts start ==========================
+    // default clock speed is 240MHz
+    // 240MHz / 240 = 1MHz      1 000 000 timer increments per second
+    // 1 000 000 / 20 = 50 000  timer value to count to before calling interrupt (call 20 times per second)
+    timer = timerBegin(0, 240, true);                       // start timer with pre-scaler of 80
+    timerAttachInterrupt(timer, &readI2COnTimer, true);     // attach function to timer
+    timerAlarmWrite(timer, 50000, true);                    // set count value before interrupt occurs
+    timerAlarmEnable(timer);                                // start the timer
+    // ====================== Interrupts end ===========================
+
     // ========================= LED start =============================
     SetupFastLED(); // set the LEDs
     // ========================== LED end ==============================
 
     pinMode(22, OUTPUT);
-    pinMode(23, OUTPUT);
-    
+    pinMode(23, OUTPUT);   
 }
-
 // =====================================================================
 // ========================== END OF SETUP =============================
 // =====================================================================
@@ -375,7 +392,6 @@ void setup()
 // =====================================================================
 // ============================== LOOP =================================
 // =====================================================================
-
 void loop()
 {
     // ========================= I2C start =============================
@@ -384,8 +400,6 @@ void loop()
     // static variables
     // static variables only get initialized once, when the loop function is first called
     // values of static variables persist through function calls
-    static int readTime = currentTime;  // time when we last read
-
     static bool gameStatus = 0;     // game on: 1, game off: 0
     static bool reset = 0;          // 1 for resetting
     static bool autoMode = 0;       // not autonomous mode: 0, is auto mode: 1
@@ -395,9 +409,9 @@ void loop()
 
     static int respawnTimer;        // amount of time remaining on respawn
 
-    if ((currentTime - READPERIOD) >= readTime)
+    if (readI2C)
     {
-        readTime = currentTime;     // update when we last read
+        readI2C = 0;                // set readI2C to be false
         i2c_write_test();           // need this write for some reason in order to get read to work?
         i2c_read_test();            // read information from slave (top hat)  
 
@@ -431,10 +445,7 @@ void loop()
         ShowRespawnTimer(respawnTimer);
     }
 
-    delay(FLASHHALFPERIOD/2);
     FastLEDshowESP32();
-
-    FastLED.delay(1000/FRAMES_PER_SECOND);
     // ========================== LED end ==============================
 
     if (gameStatus) 
@@ -456,7 +467,6 @@ void loop()
     }
 
 }
-
 // =====================================================================
 // ========================== END OF LOOP ==============================
 // =====================================================================

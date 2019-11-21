@@ -38,6 +38,7 @@
 
 #define _I2C_NUMBER(num) I2C_NUM_##num   
 #define I2C_NUMBER(num) _I2C_NUMBER(num)
+
 #define DATA_LENGTH 128                         // data buffer length of test buffer
 #define RW_TEST_LENGTH 128                      // data length for r/w test, [0,DATA_LENGTH]
 #define DELAY_TIME_BETWEEN_ITEMS_MS 1000        // delay time between different test items
@@ -84,7 +85,7 @@ static void disp_buf(uint8_t *buf, int len)
     Serial.printf("\n");
 }
 
-uint8_t data[DATA_LENGTH];
+uint8_t data_rd[DATA_LENGTH];
 uint8_t data_wr[DATA_LENGTH];
 
 uint8_t count;
@@ -108,28 +109,25 @@ static void i2c_write_buffer()
     }
 }
 
-
 int i2c_read_test()  // returns 0 if nothing has been written to slave
 { 
     int datasize, ret;
     long starttime = micros();
-    datasize = i2c_slave_read_buffer(I2C_SLAVE_NUM, data, RW_TEST_LENGTH, 0 / portTICK_RATE_MS); // last term is wait time 0/portTICK_RATE_MS means don't wait
+    datasize = i2c_slave_read_buffer(I2C_SLAVE_NUM, data_rd, RW_TEST_LENGTH, 0 / portTICK_RATE_MS); // last term is wait time 0/portTICK_RATE_MS means don't wait
     if (datasize > 0) 
     {
         Serial.printf("---- Slave read: [%d] bytes ----\n", datasize);
-        disp_buf(data, datasize);
+        disp_buf(data_rd, datasize);
     }
     //else Serial.printf("------ No data to read in %d us \n", micros()-starttime);
     return (datasize);
 }
-
 // =================================================================
 // ========================== I2C end ==============================
 // =================================================================
 
 
 // ========================= WiFi start =============================
-
 // credentials
 const char* ssid     = "TestCentral";
 const char* password = "r0b0tics";
@@ -150,11 +148,9 @@ const int udpCentralTargetPort = 10000;
 
 byte incomingData[INCOMING_MESSAGE_SIZE];
 byte outgoingData[INCOMING_MESSAGE_SIZE];
-
 // ========================== WiFi end ==============================
 
 // ==================== Game variables start ========================
-
 // Pins
 #define ROBOTID0 4
 #define ROBOTID1 16
@@ -165,9 +161,6 @@ byte outgoingData[INCOMING_MESSAGE_SIZE];
 
 #define WHISKER 23
 
-//#define SCL 33    // unnecessary, SCL variable isn't used
-//#define SDA 25    // unnecessary, SDA variable isn't used
-
 // delay this many ms after the whisker is hit before it can change again
 #define WHISKER_HIT_CD  300
 
@@ -177,7 +170,7 @@ byte outgoingData[INCOMING_MESSAGE_SIZE];
 byte teamNumber;                            // team number (Canvas)
 byte metaTeamNumber;                        // meta team number
 byte robotNumber;                           // robot number (within a meta team: 1-4)
-byte maxHealth = -1;                        // track the max health (starting health) of this robot
+byte maxHealth = 255;                       // track the max health (starting health) of this robot
 byte currHealth = maxHealth;                // track the current health of this robot
 bool isDead = 0;                            // track if the robot is dead (1 for yes, 0 for no)
 volatile unsigned long timeOfDeath = 0;     // track the time that the robot died
@@ -185,9 +178,9 @@ byte respawnTimer = RESPAWN_TIME;           // respawn timer
 
 volatile bool whiskerHitFlag = 0;
 volatile unsigned long whiskerHitTime = 0;
-
 // ===================== Game variables end =========================
 
+// ====================== Interrupt start ==========================
 portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;    // needed for interrupts
 
 // Interrupt handlers for whisker switch
@@ -196,27 +189,13 @@ void IRAM_ATTR handleWhiskerInterrupt()
     portENTER_CRITICAL_ISR(&mux);
     if ((millis() - whiskerHitTime) > WHISKER_HIT_CD)
     {
-        // if it has been more than the delay, whisker was hit again
-        whiskerHitTime = millis();  // set the time the whisker was hit
-        whiskerHitFlag = 1;         // set the flag
-        
-        if (currHealth != 0)
-        {
-            currHealth -= 1;            // subtract 1 from current health of robot
-            Serial.println("I've been hit :(");
-            Serial.print("I now have health: ");
-            Serial.println(currHealth);
-            if (currHealth == 0)
-            {
-                // robot has no health and is dead
-                isDead = 1;
-                timeOfDeath = millis();
-                respawnTimer = RESPAWN_TIME;
-            }
-        }
+        // if it has been more than the CD, whisker was hit again
+        whiskerHitFlag = 1;             // set whisker hit flag
+        whiskerHitTime = millis();      // set the time the whisker was hit
     }
     portEXIT_CRITICAL_ISR(&mux);
 }
+// ======================= Interrupt end ===========================
 
 // =====================================================================
 // ============================= SETUP =================================
@@ -225,7 +204,7 @@ void setup()
 {
     Serial.begin(115200);
     Serial.println("Start of Setup");
-    Serial.println("TopHatCode Version: v1");
+    Serial.println("TopHatCode Version: v2");
 
     // setup pins
     pinMode(ROBOTID0, INPUT_PULLUP);
@@ -416,10 +395,48 @@ void loop()
     Serial.println(currHealth);
     // ====================== Parse Data end ===========================
 
+    // ====================== whisker start ============================
+    if (whiskerHitFlag)
+    {
+        whiskerHitFlag = 0;     // reset whisker hit flag
+
+        if (currHealth != 0)
+        {
+            currHealth -= 1;            // subtract 1 from current health of robot
+            Serial.println("I've been hit :(");
+            Serial.print("I now have health: ");
+            Serial.println(currHealth);
+            if (currHealth == 0)
+            {
+                // robot has no health and is dead
+                isDead = 1;
+                timeOfDeath = millis();
+                respawnTimer = RESPAWN_TIME;
+            }
+        }
+    }
+    // ======================= whisker end =============================
+
+    // ====================== respawn start ============================
+    // decrement respawnTimer every second
+    if (isDead)
+    {
+        unsigned long timeSinceDeath = millis() - timeOfDeath;
+        respawnTimer = RESPAWN_TIME - floor(timeSinceDeath / 1000);
+        respawnTimer = max(0, int(respawnTimer));    // respawnTimer cannot be below 0
+        if (respawnTimer == 0)
+        {
+            // robot should come back alive
+            isDead = 0;
+            currHealth = maxHealth;
+        }
+    }
+    // ======================= respawn end =============================
 
     // ========================= I2C start =============================
     // send information to robot over I2C
     // put data into the I2C buffer
+    digitalWrite(LED_BUILTIN, HIGH);
     data_wr[0] = incomingData[0];
     data_wr[1] = currHealth;
     data_wr[2] = respawnTimer;
@@ -429,6 +446,8 @@ void loop()
         i2c_write_buffer();
     }
     delay(30);
+    
+    digitalWrite(LED_BUILTIN, LOW);
     // ========================== I2C end ==============================
 
     // ====================== UDP send start ===========================
@@ -447,23 +466,6 @@ void loop()
 //    
 //    digitalWrite(LED_BUILTIN, LOW);
     // ======================= UDP send end ============================
-
-    // ====================== respawn start ============================
-    // decrement respawnTimer every second
-    if (isDead)
-    {
-        unsigned long timeSinceDeath = millis() - timeOfDeath;
-        respawnTimer = RESPAWN_TIME - floor(timeSinceDeath / 1000);
-        respawnTimer = max(0, int(respawnTimer));    // respawnTimer cannot be below 0
-        if (respawnTimer == 0)
-        {
-            // robot should come back alive
-            isDead = 0;
-            currHealth = maxHealth;
-        }
-    }
-    
-    // ======================= respawn end =============================
 
 //    Serial.println("End of loop");
 }
