@@ -217,7 +217,7 @@ FASTLED_USING_NAMESPACE
 #define TEAMCOLOR   BLUE            // color for the robot team, either RED or BLUE
 // ==========================
 
-#define DATA_PIN    12              // pin attached to LED ring
+#define NEO_LED_PIN 12              // pin attached to LED ring
 #define LED_TYPE    WS2812          // APA102
 #define COLOR_ORDER GRB             // changes the order so we can use standard RGB for the values
 #define NUM_LEDS    24              // number of LEDs in the ring
@@ -277,7 +277,7 @@ void FastLEDshowTask(void *pvParameters)
 void SetupFastLED(void)
 {
     // tell FastLED about the LED strip configuration
-    FastLED.addLeds<LED_TYPE,DATA_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE,NEO_LED_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
 
     // set master brightness control
     FastLED.setBrightness(BRIGHTNESS);
