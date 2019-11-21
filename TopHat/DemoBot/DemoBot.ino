@@ -188,7 +188,7 @@ volatile bool readI2C = 0;                              // should we read data f
 void IRAM_ATTR readI2COnTimer()
 {
     portENTER_CRITICAL_ISR(&timerMux);
-    readI2C = 1;                            // need to read I2C next loop
+    readI2C = 1;                        // need to read I2C next loop
     portEXIT_CRITICAL_ISR(&timerMux);
 }
 // =================================================================
@@ -224,7 +224,6 @@ FASTLED_USING_NAMESPACE
 CRGB leds[NUM_LEDS];                // set value of LED, each LED is 24 bits
 
 #define BRIGHTNESS          60      // lower the brightness a bit
-#define FRAMES_PER_SECOND   120     // some number :P likely faster than needed
 
 // core to run FastLED.show()
 #define FASTLED_SHOW_CORE 0
@@ -370,9 +369,9 @@ void setup()
     // ===================== Interrupts start ==========================
     // default clock speed is 240MHz
     // 240MHz / 240 = 1MHz      1 000 000 timer increments per second
-    // 1 000 000 / 20 = 50 000  timer value to count to before calling interrupt (call 20 times per second)
-    timer = timerBegin(0, 240, true);                       // start timer with pre-scaler of 80
-    timerAttachInterrupt(timer, &readI2COnTimer, true);     // attach function to timer
+    // 1 000 000 / 20 = 50 000  timer value to count up to before calling interrupt (call 20 times per second)
+    timer = timerBegin(0, 240, true);                       // initialize timer with pre-scaler of 240
+    timerAttachInterrupt(timer, &readI2COnTimer, true);     // attach function to timer interrupt
     timerAlarmWrite(timer, 50000, true);                    // set count value before interrupt occurs
     timerAlarmEnable(timer);                                // start the timer
     // ====================== Interrupts end ===========================
@@ -395,8 +394,6 @@ void setup()
 void loop()
 {
     // ========================= I2C start =============================
-    int currentTime = millis();         // get the current time
-
     // static variables
     // static variables only get initialized once, when the loop function is first called
     // values of static variables persist through function calls
