@@ -393,12 +393,13 @@ class UDPReceiverLoop(ProtectedLoop):
         try:
             data, address = self.udpServer.recvfrom(self.bufferSize)
             with self.arena.lock:
+                print(data)
                 self.arena.receive_tophat_message(data, address[0])
 
         except socket.error:
             pass
 
-        time.sleep(0.1)
+        time.sleep(0.001)
 
     def prot_loop_shutdown(self):
         """Summary

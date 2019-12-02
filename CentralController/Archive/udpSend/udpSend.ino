@@ -9,8 +9,8 @@ char packetOut[1024];
 const int packetSize = 1024;
 
 // WiFi network name and password:
-char *networkName = "mechatronics";
-char *networkPswd = "meam5102019";
+char *networkName = "ESAP2019-2.4";
+char *networkPswd = "r0b0tics";
 
 //declare WiFiUDP object
 WiFiUDP UDPTestServer;
@@ -18,8 +18,8 @@ WiFiUDP UDPTestServer;
 //set local and target IP addresses and ports
 unsigned int UDPLocalPort = 2401;
 unsigned int UDPTargetPort = 10000;
-IPAddress myIPAddress(192, 168, 4, 10);
-IPAddress IPTarget(192,168, 4, 2); 
+IPAddress myIPAddress(192, 168, 1, 101);
+IPAddress IPTarget(192,168, 1, 2); 
 
 void setup() {
   Serial.begin(115200);
@@ -43,14 +43,16 @@ void setup() {
 }
 
 void loop() {
-
-  packetOut[0] = 0xff;
-  packetOut[1] = 0xff;
-  packetOut[2] = 0;
-  UDPTestServer.beginPacket(IPTarget, UDPTargetPort);
-  UDPTestServer.printf("%s", packetOut);
-  UDPTestServer.endPacket();
-
-  Serial.println("Packet sent");
-  delay(500); //delay to reduce frequency of polling
+  int i;
+  for(char i = 0x01; i <= 0xff; i++) {
+    packetOut[0] = i;
+    packetOut[1] = i;
+    packetOut[2] = 0;
+    UDPTestServer.beginPacket(IPTarget, UDPTargetPort);
+    UDPTestServer.printf("%s", packetOut);
+    UDPTestServer.endPacket();
+  
+    Serial.println("Packet sent");
+    delay(1000); //delay to reduce frequency of polling
+  }
 }

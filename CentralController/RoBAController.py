@@ -31,7 +31,7 @@ ipAddress = get_host_name_IP()[1]
 try:
     # Create UDP State Update Loop Thread, which sends 4 times a second
     udpUpdateLoop = RoBAThreading.UDPBroadcastLoop(arena, port=5555, delay=0.25)
-    udpTopHatReceiverLoop = RoBAThreading.UDPReceiverLoop(arena, port=10000, delay=0.1) # (Added - 11 Nov 2019 - Aslamah)
+    udpTopHatReceiverLoop = RoBAThreading.UDPReceiverLoop(arena, port=10000, delay=0.03) # (Added - 11 Nov 2019 - Aslamah)
     tcpServerLoop = RoBAThreading.RoBATCPListener(ipAddress, arena, port=4444)
     #syncServerLoop = RoBAThreading.SyncServer(ipAddress, arena, port=3333, timeout=10) (Removed - 5 Nov 2019 - Aslamah)
     stateLog = TextGUI(arena)
