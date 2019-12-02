@@ -361,7 +361,7 @@ class UDPBroadcastLoop(ProtectedLoop):
 
 # (Added - 11 Nov 2019 - Aslamah)
 class UDPReceiverLoop(ProtectedLoop):
-    def __init__(self, arena, port=10000, delay=0.005):
+    def __init__(self, arena, port=10000, delay=0.001):
         ProtectedLoop.__init__(self)
 
         self.delay = delay
@@ -393,13 +393,12 @@ class UDPReceiverLoop(ProtectedLoop):
         try:
             data, address = self.udpServer.recvfrom(self.bufferSize)
             with self.arena.lock:
-                print(data)
                 self.arena.receive_tophat_message(data, address[0])
 
         except socket.error:
             pass
 
-        time.sleep(0.001)
+        time.sleep(self.delay)
 
     def prot_loop_shutdown(self):
         """Summary

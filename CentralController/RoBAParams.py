@@ -38,7 +38,7 @@ class RoBAParams:
     #healingEnabled = True # Enable the healing lights and healing capability (Removed - 2 Nov 2019 - Aslamah)
     towersEnabled = True # Enable tower capture
     autonomousStartEnabled = True # Enable autonomous mode at the start of the game
-    autonomousStartTime = 30
+    autonomousStartTime = 60
     minDPS = 1
     towerHitRate = 1 #Hz
     ipSubnet = '192.168.1.' # (Added - 12 Nov 2019 - Aslamah)
