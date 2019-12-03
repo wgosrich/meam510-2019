@@ -204,6 +204,9 @@ void loop() {
 //    Serial.print("Sync Status: ");
 //    Serial.println(syncStatus);
 //    Serial.println();
+    //(removed - 12/2/19 - walker)
+    // shouldn't need this info
+    /*
     coolDownStatus = incomingData[1];  // 0 ready to hit, 1 cooling down
     healthNexus[0] = incomingData[2];
     healthNexus[1] = incomingData[3];
@@ -219,6 +222,7 @@ void loop() {
     healthRobot[5] = incomingData[11];
     healthRobot[6] = incomingData[12];
     healthRobot[7] = incomingData[13];
+    */
 
     towerStatus[1] = 0x0F & (incomingData[14] >> 0);    // This can be cleaned up because you just need the and for the first one and the shift for the second but I like the consistency.
     towerStatus[2] = 0x0F & (incomingData[14] >> 4);
