@@ -277,6 +277,7 @@ class Arena:
         # for rob in self.robots+self.nexuses: # (Removed - 12 Nov 2019 - Aslamah)
         for rob in self.nexuses: # (Added - 12 Nov 2019 - Aslamah)
             rob.update_health()
+            print(rob.health)
 
 
     def rob_who_IP(self, IP):
@@ -420,8 +421,6 @@ class Arena:
         rob.health = int(message[1] | message[2] << 1 | message[3] << 2 | message[4] << 3 | message[5] << 4)
         rob.xLocation = int(message[8] | message[9] << 1 | message[10] << 2 | message[11] << 3)
         rob.yLocation = int(message[12] | message[13] << 1 | message[14] << 2 | message[15] << 3)
-
-        print(rob.health)
 
     def get_fake_message(self):
         """Summary

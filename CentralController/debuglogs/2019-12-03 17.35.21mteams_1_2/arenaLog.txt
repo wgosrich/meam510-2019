@@ -1,0 +1,146 @@
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.2.80
+***********Robot Message Tuple(1, 0)

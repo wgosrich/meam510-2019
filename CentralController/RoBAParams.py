@@ -26,7 +26,7 @@ class RoBAParams:
 
     """
 
-    nexusMaxHealth = 900 # [HP]
+    nexusMaxHealth = 48 # [HP]
     #robotMaxHealth = 99 # [HP] (Removed - 2 Nov 2019 - Aslamah)
     robotMinStartHealth = 2 # [HP] (Added - 2 Nov 2019 - Aslamah)
     #healAmount = 20 # [HP] (Removed - 2 Nov 2019 - Aslamah)
