@@ -74,8 +74,8 @@ CRGB leds[NUM_LEDS];
 //*********************************************************
 
 
-const char* ssid     = "Central";
-const char* password = "Y4yR0b0t5";
+const char* ssid     = "CENTRAL-2.4";
+const char* password = "r0b0tics";
 
 const int TCPSendPort = 4444;
 const int udpReceivePort = 5555;
@@ -204,6 +204,9 @@ void loop() {
 //    Serial.print("Sync Status: ");
 //    Serial.println(syncStatus);
 //    Serial.println();
+    //(removed - 12/2/19 - walker)
+    // shouldn't need this info
+    /*
     coolDownStatus = incomingData[1];  // 0 ready to hit, 1 cooling down
     healthNexus[0] = incomingData[2];
     healthNexus[1] = incomingData[3];
@@ -219,6 +222,7 @@ void loop() {
     healthRobot[5] = incomingData[11];
     healthRobot[6] = incomingData[12];
     healthRobot[7] = incomingData[13];
+    */
 
     towerStatus[1] = 0x0F & (incomingData[14] >> 0);    // This can be cleaned up because you just need the and for the first one and the shift for the second but I like the consistency.
     towerStatus[2] = 0x0F & (incomingData[14] >> 4);
@@ -232,15 +236,15 @@ void loop() {
   //------------------------------------------------------------------------
 
 
-    //Run LED strip
-    if(gameStatus){
-      tower_handle();  //Counts up and updates the towerGauge and towerState
-      tower_send();      
-    }
-    linear_growth(towerGauge/(GAUGE_MAX/100), towerState, leds);
-    FastLED.show();
+  //Run LED strip
+  if(gameStatus){
+    tower_handle();  //Counts up and updates the towerGauge and towerState
+    tower_send();      
+  }
+  linear_growth(towerGauge/(GAUGE_MAX/100), towerState, leds);
+  FastLED.show();
 //    tower_send();
-    delay(50);  // wait a bit
+  delay(50);  // wait a bit
 }
 //**********************************
 //TOWER_SEND()
@@ -250,15 +254,17 @@ void tower_send(){
     static unsigned long sentTime  = 0;
     //if (towerState == 0) return;
     //Send damage information to central
-    if (millis()-sentTime > HIT_SEND_PER){
+    if (millis()-sentTime > HIT_SEND_PER){ //if time since last send is greater than 1 sec
         sentTime = millis();
         //Shift tower gauge by 127 and send
         byte towerValue = towerGauge/(GAUGE_MAX/100)+127;  //Shift the +- percent to an always + value
         Serial.print("Tower Value: ");
         Serial.println(towerValue);
-      
-        char packet[] = {((MADEHIT * abs(towerState)) | ((towerState==1)<<4)|(1<<7)), towerValue}; // the one in the 8th bit is just so the first byte is not zero
-      
+
+
+        // packet = [2*istowercaptured]
+        // char packet[] = {((MADEHIT * abs(towerState)) | ((towerState==1)<<4)|(1<<7)), towerValue};(removed- 12/2/19 - walker) // the one in the 8th bit is just so the first byte is not zero
+        char packet[] = {(abs(towerState)) | (((towerState==1)<<1)|(1<<7))}; //(added - 12/2/19 - walker)
       //cli = serverSend.available();
       Serial.println("trying to send");
       Serial.println(centralIP);
@@ -287,7 +293,7 @@ void tower_handle() {
     int buttonSt[2] = {!digitalRead(HIT_BUTTON1),!digitalRead(HIT_BUTTON2)};
 
     Serial.println("Tower Handle:");
-    NERF_DEFENSE();
+    //NERF_DEFENSE(); (removed - 12/2/19 - walker)
 
     int timePast = millis()-timeLast;
     timeLast = millis();
@@ -298,13 +304,13 @@ void tower_handle() {
 
 //    Serial.println("Tower Handle:3");
     // If the tower just switched, ignore inputs for TOWER_SWITCH_PER ms
-    if (millis() - towerSwitchTime < TOWER_SWITCH_PER) return;
+    if (millis() - towerSwitchTime < TOWER_SWITCH_PER) return; //??? not sure what this does -- asks if the current time plus 1000 is less than 1000?
 
     Serial.println("Tower Handle:4");
     // Change in gauge sign/direction
     /* teamDir = 1 if red is pressed, -1 if blue is pressed,
      *           0 if neither is pressed, 0 if both are pressed (handled above)*/
-    int teamDir = (buttonSt[RED_B]-buttonSt[BLUE_B]);
+    int teamDir = (buttonSt[RED_B]-buttonSt[BLUE_B]); 
 
     // If only one button is pressed
     /* Many of the operations below use the sign of the towerGauge and teamDir to make decisions about state
@@ -343,7 +349,7 @@ void tower_handle() {
     // If towerGauge reaches max, set tower capture by that team
     if (abs(towerGauge) >= GAUGE_MAX){
         towerSwitchTime = millis();
-        towerState = SGN(towerGauge);
+        towerState = SGN(towerGauge); //1 for RED
     }
     /* Clamp towerGauge to 0 for current captors,
      * but allow gauge to move for attackers */
