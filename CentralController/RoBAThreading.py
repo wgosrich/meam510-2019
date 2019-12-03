@@ -187,9 +187,9 @@ class RoBATCPListener(ThreadedTCPServer):
 
     def listen(self):
         try:
-            print("listening here")
+            # print("listening here")
             conn, addr = self.sock.accept()
-            print(addr)
+            # print(addr)
             self.arena.logL.write("\n***********Getting IO: " + addr[0] + "\n")
         except IOError:
             # ISSUE: listen is jumping to here - experiencing IO error instead of connecting to a sending client
@@ -256,6 +256,7 @@ class listen_RoBA_client(ProtectedLoop):
                                      #  np.uint32(data[2]<<(1*8)) +
                                      #  np.uint32(data[3]<<(2*8)) +
                                      #  np.uint32(data[4]<<(3*8))))
+                # print("tcp msg ", robotMessageTuple[0])
                 self.arena.logL.write("***********Robot Message Tuple" + str(robotMessageTuple)+'\n')
             else:
                 raise Exception('Client disconnected')

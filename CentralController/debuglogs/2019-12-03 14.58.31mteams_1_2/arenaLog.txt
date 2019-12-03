@@ -1,7 +1,7 @@
 
 ***********Getting IO: 192.168.1.98
 ***********Robot Message Tuple(129, 0)
-***********Robot/Tower 98 is inactive
+***********Robot/Tower 98 is inactive 
 
 ***********Getting IO: 192.168.1.98
 ***********Robot Message Tuple(129, 0)
