@@ -41,8 +41,9 @@ class RoBAParams:
     autonomousStartTime = 60
     minDPS = 1
     towerHitRate = 1 #Hz
-    ipSubnet = '192.168.1.' # (Added - 12 Nov 2019 - Aslamah)
+    ipSubnet = '192.168.43.' # (Added - 12 Nov 2019 - Aslamah)
     ipOffset = 100 # (Added - 12 Nov 2019 - Aslamah)
+    broadcastType = 'AS' # 1S
 
 
     def respawn_time_function(self, arena):

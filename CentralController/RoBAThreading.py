@@ -307,7 +307,7 @@ class listen_RoBA_client(ProtectedLoop):
         raise NameError
 
 class UDPBroadcastLoop(ProtectedLoop):
-    def __init__(self, arena, port=5555, delay=1):
+    def __init__(self, arena, port=5555, delay=1, broadcastType='AS'):
 
         ProtectedLoop.__init__(self)
         self.delay = delay
@@ -322,8 +322,11 @@ class UDPBroadcastLoop(ProtectedLoop):
         self.udpServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         self.udpServer.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         self.udpServer.settimeout(1)
-        self.udpServer.bind((self.ipAddress, port)) # (Removed - 11 Nov 2019 - Aslamah)
-        #self.udpServer.bind(("", port)) # (Added - 11 Nov 2019 - Aslamah)
+
+        if broadcastType == '1S':
+            self.udpServer.bind((self.ipAddress, port)) # (Removed - 11 Nov 2019 - Aslamah)
+        else:
+            self.udpServer.bind(("", port)) # (Added - 11 Nov 2019 - Aslamah)
 
         self.listenOnly = 0
         self.lastSend = time.time()

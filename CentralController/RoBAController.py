@@ -17,6 +17,9 @@ from RoBAUIHandler import handle_key, TextGUI
 
 import shutil
 
+# (Added - 3 Dec - Aslamah)
+from RoBAParams import RoBAParams
+params = RoBAParams()
 
 # arena = Arena('friendly2.csv', 1, 2)
 arena = Arena('Teaminfo-downloadascsv.csv', 1, 2)
@@ -30,7 +33,7 @@ ipAddress = get_host_name_IP()[1]
 
 try:
     # Create UDP State Update Loop Thread, which sends 4 times a second
-    udpUpdateLoop = RoBAThreading.UDPBroadcastLoop(arena, port=5555, delay=0.25)
+    udpUpdateLoop = RoBAThreading.UDPBroadcastLoop(arena, port=5555, delay=0.25, broadcastType=params.broadcastType)
     udpTopHatReceiverLoop = RoBAThreading.UDPReceiverLoop(arena, port=10000, delay=0.001) # (Added - 11 Nov 2019 - Aslamah)
     tcpServerLoop = RoBAThreading.RoBATCPListener(ipAddress, arena, port=4444)
     #syncServerLoop = RoBAThreading.SyncServer(ipAddress, arena, port=3333, timeout=10) (Removed - 5 Nov 2019 - Aslamah)

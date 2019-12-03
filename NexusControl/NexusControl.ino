@@ -111,8 +111,8 @@ static TaskHandle_t userTaskHandle = 0;
 
 #define INCOMINGMESSAGESIZE 128
 
-const char* ssid     = "Central";
-const char* password = "Y4yR0b0t5";
+const char* ssid     = "AslamahFi";
+const char* password = "finewhatever";
 
 
 #define EVENTDELAY 300 // delay this many ms after the button or weapon is used before it can change again
@@ -121,7 +121,7 @@ const int TCPSyncPort = udpSyncPort; // !!!!! 11/5 Diego separating the UDP resp
 const int TCPSendPort = 4444;
 const int udpReceivePort = 5555;
 
-IPAddress centralIP(192,168,1,2);  //IP address for central.  Changing this in the code appears to only change it locally.
+IPAddress centralIP(192,168,43,186);  //IP address for central.  Changing this in the code appears to only change it locally.
 byte robotNumber;
 
 volatile bool buttonPressedFlag = 0;
@@ -275,7 +275,7 @@ void setup() {
   Serial.println(robotNumber);
   Serial.println();
 
-  IPAddress myIPaddress(192, 168, 1, (robotNumber)); // arbitrary address need to send to
+  IPAddress myIPaddress(192, 168, 43, (robotNumber)); // arbitrary address need to send to
 
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -292,31 +292,32 @@ void setup() {
 
   Serial.println("WiFi connected");
 
-    udpSync.begin(udpSyncPort);
-  udpReceive.begin(udpReceivePort);
-
-  // Sync Beacon.  This sends a Sync response with number 0 to Central to let it know that we just rebooted and need to sync.
-  char syncPacket[] = {0, robotNumber};
-  //cli = serverSend.available();
-  bool messageSent = 0;
-  while (!messageSent){
-    delay(100);
-    Serial.println("I need to sync!");
-    cli.connect(centralIP,TCPSyncPort);//!!!!!!!!!    11/5 Diego
-    if (cli) {
-      cli.print(syncPacket);
-      Serial.println("Sync Response sent");
-      messageSent = 1;
-      //serverSend.write(syncPacket,sizeof(syncPacket)); //(data bytes to send, number of bytes of the data)
-    }
-
-  }
+//  udpSync.begin(udpSyncPort);
+//  udpReceive.begin(udpReceivePort);
+//
+//  // Sync Beacon.  This sends a Sync response with number 0 to Central to let it know that we just rebooted and need to sync.
+//  char syncPacket[] = {0, robotNumber};
+//  //cli = serverSend.available();
+//  bool messageSent = 0;
+//  while (!messageSent){
+//    delay(100);
+//    Serial.println("I need to sync!");
+//    cli.connect(centralIP,TCPSyncPort);//!!!!!!!!!    11/5 Diego
+//    if (cli) {
+//      cli.print(syncPacket);
+//      Serial.println("Sync Response sent");
+//      messageSent = 1;
+//      //serverSend.write(syncPacket,sizeof(syncPacket)); //(data bytes to send, number of bytes of the data)
+//    }
+//
+//  }
 
   //LED STUFF++++++++++++++++++++++++++++++++++++++++
   SetupFastLED();  // Setup the LEDs
   //END LED STUFF++++++++++++++++++++++++++++++++++++++++
 
   wdtInit();  // need to init at the end or it will reset on one missed message
+  udpReceive.begin(udpReceivePort);
 
   Serial.println("End of Setup");
 
@@ -352,7 +353,14 @@ void loop() {
    //packetNumber = handleTCPserver(incomingDataAddress);
   //Serial.println("1");
   // If something happened send that info
-  sendButtonPress();
+
+//  Aslamah test
+  static int time_old = millis();
+  if(millis() - time_old >= 1000) {
+    buttonPressedFlag = true;
+    sendButtonPress();
+    time_old = millis();
+  }
   //Serial.println("2");
 
 
@@ -376,11 +384,12 @@ void loop() {
     if (len > 0) {
       packetBuffer[len] = 0;
     }
-    Serial.println("Contents:");
-    for(int i=0; i<len; i++) {
-      Serial.println(incomingData[i]);
-    }
+//    Serial.println("Contents:");
+//    for(int i=0; i<len; i++) {
+//      Serial.println(incomingData[i]);
+//    }
     packetNumber++;
+    udpReceive.flush();
 
   }
 
@@ -485,9 +494,10 @@ void loop() {
       // towerStatus[2] = 0x0F & (incomingData[14]>>4);
    }
 
-    if(reset){
-      ESP.restart();
-    }
+  // (Removed - 3 Dec - Aslamah)
+//    if(reset){
+//      ESP.restart();
+//    }
 
    // end parse
    //------------------------------------------------------------------------
