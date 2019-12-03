@@ -111,8 +111,8 @@ static TaskHandle_t userTaskHandle = 0;
 
 #define INCOMINGMESSAGESIZE 128
 
-const char* ssid     = "Central";
-const char* password = "Y4yR0b0t5";
+const char* ssid     = "CENTRAL-2.4";
+const char* password = "r0b0tics";
 
 
 #define EVENTDELAY 300 // delay this many ms after the button or weapon is used before it can change again
