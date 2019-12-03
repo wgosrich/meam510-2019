@@ -74,8 +74,8 @@ CRGB leds[NUM_LEDS];
 //*********************************************************
 
 
-const char* ssid     = "Central";
-const char* password = "Y4yR0b0t5";
+const char* ssid     = "CENTRAL-2.4";
+const char* password = "r0b0tics";
 
 const int TCPSendPort = 4444;
 const int udpReceivePort = 5555;
@@ -264,7 +264,7 @@ void tower_send(){
 
         // packet = [2*istowercaptured]
         // char packet[] = {((MADEHIT * abs(towerState)) | ((towerState==1)<<4)|(1<<7)), towerValue};(removed- 12/2/19 - walker) // the one in the 8th bit is just so the first byte is not zero
-        char packet[] = {(abs(towerState)) | (((towerState==1)<<1)|(1<<7))} //(added - 12/2/19 - walker)
+        char packet[] = {(abs(towerState)) | (((towerState==1)<<1)|(1<<7))}; //(added - 12/2/19 - walker)
       //cli = serverSend.available();
       Serial.println("trying to send");
       Serial.println(centralIP);
@@ -293,7 +293,7 @@ void tower_handle() {
     int buttonSt[2] = {!digitalRead(HIT_BUTTON1),!digitalRead(HIT_BUTTON2)};
 
     Serial.println("Tower Handle:");
-    //NERF_DEFENSE(); (remove - 12/2/19 - walker)
+    //NERF_DEFENSE(); (removed - 12/2/19 - walker)
 
     int timePast = millis()-timeLast;
     timeLast = millis();

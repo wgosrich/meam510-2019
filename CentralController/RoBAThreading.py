@@ -187,10 +187,12 @@ class RoBATCPListener(ThreadedTCPServer):
 
     def listen(self):
         try:
-            # print("listening here")
+            print("listening here")
             conn, addr = self.sock.accept()
+            print(addr)
             self.arena.logL.write("\n***********Getting IO: " + addr[0] + "\n")
         except IOError:
+            # ISSUE: listen is jumping to here - experiencing IO error instead of connecting to a sending client
             return 0
         except Exception as err:
             print("Unexpected Server Exception: ", err, err.args)
@@ -198,7 +200,7 @@ class RoBATCPListener(ThreadedTCPServer):
         conn.settimeout(1)
 
         # NOTE: HERE IS THE DIFFERENCE ROBA
-
+        # print("listening ROBA client")
         listen_RoBA_client(conn, addr, self.arena, timeout=self.timeout).start()
 
 class listen_RoBA_client(ProtectedLoop):
@@ -239,6 +241,7 @@ class listen_RoBA_client(ProtectedLoop):
         """Summary
 
         """
+        print("running TCP loop")
         size = 1024
         try:
             data = self.client.recv(size)
@@ -284,6 +287,7 @@ class listen_RoBA_client(ProtectedLoop):
         """Summary
         """
         self.prot_loop_startup()
+        print("running TCP loop wrapper")
 
         try:
             while (not self.shutdownFlag.is_set()) and (time.time() < self.lastRecvTime+self.timeout):
