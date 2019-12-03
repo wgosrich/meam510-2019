@@ -1,0 +1,199 @@
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(128, 0)
+***********Robot/Tower 98 is inactive 

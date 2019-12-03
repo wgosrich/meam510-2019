@@ -327,10 +327,10 @@ class Arena:
 
                     # (Added - 5 Nov 2019 - Aslamah)
                     #(np.uint8(self.sync << 3) +  (Removed - 5 Nov 2019 - Aslamah)
-        infoByte =  (np.uint8(1) + \
-                    np.uint8(self.autonomousMode << 2) +  \
+        infoByte =  (np.uint8(self.autonomousMode << 2) +  \
                     np.uint8(self.demandReset << 1) +  \
                     np.uint8(self.isGameOn << 0))
+        print("game on %d", infoByte)
         cooldownByte = 0
         # (Removed - 11 Nov 2019 - Aslamah)
         # for ind, rob in enumerate(self.robots):

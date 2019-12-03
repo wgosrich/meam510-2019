@@ -1,0 +1,11 @@
+
+***********Getting IO: 192.168.1.80
+***********Robot Message Tuple(1, 0)
+***********Robot/Tower 80 is inactive 
+
+***********Getting IO: 192.168.1.80
+***********Robot Message Tuple(1, 0)
+***********Robot/Tower 80 is inactive 
+
+***********Getting IO: 192.168.1.80
+***********Robot Message Tuple(1, 0)
