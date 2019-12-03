@@ -241,7 +241,7 @@ class listen_RoBA_client(ProtectedLoop):
         """Summary
 
         """
-        print("running TCP loop")
+        # print("running TCP loop")
         size = 1024
         try:
             data = self.client.recv(size)
@@ -251,7 +251,7 @@ class listen_RoBA_client(ProtectedLoop):
                 msg = 0
                 for ind in range(1, len(data)):
                     msg += np.uint32(data[ind]<<((ind-1)*8))
-                robotMessageTuple = (int(data[0]), msg)
+                robotMessageTuple = (np.uint8(data[0]), msg)
                                      # (np.uint32(data[1]) +
                                      #  np.uint32(data[2]<<(1*8)) +
                                      #  np.uint32(data[3]<<(2*8)) +
@@ -279,7 +279,8 @@ class listen_RoBA_client(ProtectedLoop):
         try:
             self.client.shutdown(socket.SHUT_RDWR)
         except OSError:
-            self.client.shutdown()
+            # self.client.shutdown() # Removed Dec 3 Aslamah
+            pass
         self.client.close()
         # print("Closing the TCP Client on thread ", self.ident)
 
@@ -287,7 +288,7 @@ class listen_RoBA_client(ProtectedLoop):
         """Summary
         """
         self.prot_loop_startup()
-        print("running TCP loop wrapper")
+        # print("running TCP loop wrapper")
 
         try:
             while (not self.shutdownFlag.is_set()) and (time.time() < self.lastRecvTime+self.timeout):

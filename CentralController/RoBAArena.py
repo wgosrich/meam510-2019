@@ -589,12 +589,13 @@ class Arena:
 
         if teamInd == 2:# Tower message
 
-            rob.captureState = 1
-            teamInd = (robMsgTuple[0]>>1) & 0b1
-            rob.captureTeam = 'BLUE' if teamInd else 'RED'
-            # redteam is 0, blueteam is 1, so whoever captured should damage the other
-            self.teams[abs(teamInd-1)].nexus.eventQ.add_hit(rob.hitDamage) #(To check - 2 Nov 2019 - Aslamah)
-            self.logL.write("\n    Hit: from " + rob.CaptureTeam + "Tower against other Nexus")
+            if (robMsgTuple[0] & 0b1):
+                rob.captureState = 1
+                teamInd = (robMsgTuple[0]>>1) & 0b1
+                rob.captureTeam = 'BLUE' if teamInd else 'RED'
+                # redteam is 0, blueteam is 1, so whoever captured should damage the other
+                self.teams[abs(teamInd-1)].nexus.eventQ.add_hit(rob.hitDamage) #(To check - 2 Nov 2019 - Aslamah)
+                self.logL.write("\n    Hit: from " + rob.CaptureTeam + "Tower against other Nexus")
 
             return 1
 
