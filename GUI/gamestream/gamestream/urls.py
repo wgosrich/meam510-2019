@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from scoreboard.central import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('scoreboard/', include('scoreboard.urls')),
 ]
+
+# Execute once
+udpReceiver = UDPBroadcastReceiver()

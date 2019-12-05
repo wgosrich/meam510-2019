@@ -1,5 +1,7 @@
 var myVar;
 var robot1Health;
+var timerStatus = false;
+var startTime;
 
 function showTime(){
     var d = new Date();
@@ -11,7 +13,6 @@ function showTime(){
       dataType: 'json',
       success: function (data) {
         if (data) {
-          console.log(data);
           document.getElementById("redMetaTeamName").innerHTML = data.redMetaTeamName;
           document.getElementById("redRobot1Name").innerHTML = data.redRobot1Name;
           document.getElementById("redRobot2Name").innerHTML = data.redRobot2Name;
@@ -65,15 +66,34 @@ function showTime(){
           .text(data.blueRobot4Health);
 
           document.getElementById("arenaStage").innerHTML = data.arenaStage;
+          // document.getElementById("towerStatus").innerHTML = data.towerStatus;
           document.getElementById("arenaStatus").innerHTML = data.arenaStatus;
+          if(data.arenaStatus == "On" && timerStatus == false) {
+            startTime = d;
+            timerStatus = true;
+          }
+          else if(data.arenaStatus == "On") {
+            timerStatus = true;
+          }
+          else {
+            timerStatus = false;
+          }
         }
       }
     });
+
+    if(timerStatus) {
+      currTime = d - startTime;
+      document.getElementById("timer").innerHTML = currTime.toLocaleTimeString;
+    }
+    else {
+      document.getElementById("timer").innerHTML = "00:00:00";
+    }
 }
 function stopFunction(){
     clearInterval(myVar); // stop the timer
 }
 $(document).ready(function(){
-    robot1Health = 0;
-    myVar = setInterval("showTime()", 1000);
+    startTime = 0;
+    myVar = setInterval("showTime()", 100);
 });

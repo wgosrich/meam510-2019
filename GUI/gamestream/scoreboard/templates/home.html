@@ -25,9 +25,84 @@
       </div>
     </nav>
     <div class="container-fluid bg-light min-vh-100 min-vw-100">
-      <br>
       <div class="row">
-        <div class="col-lg-8">
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container min-vw-100">
+            <div class="row">
+              <div class="col">
+                <h1>Stage : <div id="arenaStage"></div></h1>
+              </div>
+              <div class="col">
+                <h1>Game Status : <div id="arenaStatus"></div></h1>
+              </div>
+              <div class="col">
+                <h1>Tower Status : <div id="towerStatus"></div></h1>
+              </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+              <div class="container mx-auto">
+                <h1>Time : <div id="timer"></div></h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="card text-white bg-danger" style="width:46vw; height:50vh">
+            <div class="card-header"><h5>Red Team : <div id="redMetaTeamName"></div></h5></div>
+            <div class="card-body">
+              <div class="row no-gutters">
+                Nexus:
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="redNexus" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row no-gutters">
+                Robot 1: <div id="redRobot1Name"></div>
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="redRobot1" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row no-gutters">
+                Robot 2: <div id="redRobot2Name"></div>
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="redRobot2" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row no-gutters">
+                Robot 3: <div id="redRobot3Name"></div>
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="redRobot3" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row no-gutters">
+                Robot 4: <div id="redRobot4Name"></div>
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="redRobot4" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+        <!-- <div class="col-lg-8">
           <div class="row">
             <div class="col">
               <div class="card text-black bg-clear" style="width:64vw; height:10vh">
@@ -40,123 +115,55 @@
                 </div>
               </div>
             </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">
-              <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-2">
-          <div class="row">
-            <div class="col">
-              <div class="card text-white bg-danger" style="width:30vw; height:44vh">
-                <div class="card-header"><h5>Red Team : <div id="redMetaTeamName"></div></h5></div>
-                <div class="card-body">
-                  <div class="row no-gutters">
-                    Nexus:
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="redNexus" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row no-gutters">
-                    Robot 1: <div id="redRobot1Name"></div>
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="redRobot1" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row no-gutters">
-                    Robot 2: <div id="redRobot2Name"></div>
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="redRobot2" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row no-gutters">
-                    Robot 3: <div id="redRobot3Name"></div>
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="redRobot3" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row no-gutters">
-                    Robot 4: <div id="redRobot4Name"></div>
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="redRobot4" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
+          </div> -->
+          <div class="card text-white bg-primary" style="width:46vw; height:50vh">
+            <div class="card-header"><h5>Blue Team : <div id="blueMetaTeamName"></div></h5></div>
+            <div class="card-body">
+              <div class="row no-gutters">
+                Nexus:
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="blueNexus" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
               <br>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="card text-white bg-primary" style="width:30vw; height:44vh">
-                <div class="card-header"><h5>Blue Team : <div id="blueMetaTeamName"></div></h5></div>
-                <div class="card-body">
-                  <div class="row no-gutters">
-                    Nexus:
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="blueNexus" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row no-gutters">
-                    Robot 1: <div id="blueRobot1Name"></div>
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="blueRobot1" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row no-gutters">
-                    Robot 2: <div id="blueRobot2Name"></div>
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="blueRobot2" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row no-gutters">
-                    Robot 3: <div id="blueRobot3Name"></div>
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="blueRobot3" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row no-gutters">
-                    Robot 4: <div id="blueRobot4Name"></div>
-                    <div class="w-100">
-                      <div class="progress">
-                        <div id="blueRobot4" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
+              <div class="row no-gutters">
+                Robot 1: <div id="blueRobot1Name"></div>
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="blueRobot1" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
               </div>
+              <br>
+              <div class="row no-gutters">
+                Robot 2: <div id="blueRobot2Name"></div>
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="blueRobot2" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row no-gutters">
+                Robot 3: <div id="blueRobot3Name"></div>
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="blueRobot3" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row no-gutters">
+                Robot 4: <div id="blueRobot4Name"></div>
+                <div class="w-100">
+                  <div class="progress">
+                    <div id="blueRobot4" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <br>
             </div>
           </div>
         </div>

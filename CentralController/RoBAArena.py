@@ -337,8 +337,12 @@ class Arena:
 
 
 
-        towerByte = (np.uint8((self.towers[0].capturePercentage + 100)/14) +
-                     (np.uint8((self.towers[1].capturePercentage + 100)/14)<<4))
+        # Removed - 5 Dec - Aslamah
+        # towerByte = (np.uint8((self.towers[0].capturePercentage + 100)/14) +
+        #              (np.uint8((self.towers[1].capturePercentage + 100)/14)<<4))
+
+        #Added - 5 Dec - Aslamah
+        towerByte = (np.uint8(self.towers[0].captureState) | np.uint8(self.towers[1].captureState))
 
         # (Added - 4 Nov 2019 - Walker)
         #create integer list of robot starting health

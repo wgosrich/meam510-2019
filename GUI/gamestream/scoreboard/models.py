@@ -8,6 +8,7 @@ class MetaTeam(models.Model):
 class Robot(models.Model):
     IP = models.IntegerField(default=100)
     name = models.CharField(max_length=200)
+    number = models.IntegerField(default=0)
     metaTeamNumber = models.IntegerField(default=0)
     health = models.IntegerField(default=24);
 
@@ -21,4 +22,5 @@ class Arena(models.Model):
     towerStatus = models.IntegerField(default=0)
 
     status = models.IntegerField(default=0)
+    autoMode = models.IntegerField(default=0)
     stage = models.CharField(max_length=200)
