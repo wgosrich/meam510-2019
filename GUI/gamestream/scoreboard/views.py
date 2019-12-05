@@ -18,42 +18,39 @@ def home(request):
 def update(request):
     arena = Arena.objects.all()
 
-    try:
-        incomingData, addr = gamestream.urls.udpReceiver.sock.recvfrom(1024) # buffer size is 1024 bytes
-        print ("received message:", incomingData)
+    # try:
+    incomingData, addr = gamestream.urls.udpReceiver.sock.recvfrom(1024) # buffer size is 1024 bytes
+    print ("received message:", incomingData)
 
-        arena.update(status = 1 & (incomingData[0] >> 0))
-        arena.update(autoMode = 1 & (incomingData[0] >> 2))
-        arena.update(redMetaTeamNumber = int(incomingData[22]))
-        arena.update(blueMetaTeamNumber = int(incomingData[23]))
-        arena.update(redNexusHealth = (incomingData[1] | incomingData[2] << 8))
-        arena.update(blueNexusHealth = (incomingData[3] | (incomingData[4] << 8)))
-        arena.update(towerStatus = 1 & (incomingData[21] >> 0))
+    arena.update(status = 1 & (incomingData[0] >> 0))
+    arena.update(autoMode = 1 & (incomingData[0] >> 2))
+    arena.update(redMetaTeamNumber = int(incomingData[22]))
+    arena.update(blueMetaTeamNumber = int(incomingData[23]))
+    arena.update(redNexusHealth = (incomingData[1] | incomingData[2] << 8))
+    arena.update(blueNexusHealth = (incomingData[3] | (incomingData[4] << 8)))
+    arena.update(towerStatus = 1 & (incomingData[21] >> 0))
 
-        if arena[0].redMetaTeamNumber > 7:
-            arena.update(redMetaTeamNumber = random.uniform(1,7))
-        if arena[0].blueMetaTeamNumber > 7:
-            arena.update(blueMetaTeamNumber = random.uniform(1,7))
+    if arena[0].redMetaTeamNumber > 7:
+        arena.update(redMetaTeamNumber = random.uniform(1,7))
+    if arena[0].blueMetaTeamNumber > 7:
+        arena.update(blueMetaTeamNumber = random.uniform(1,7))
 
-        redMetaTeam = MetaTeam.objects.filter(number=arena[0].redMetaTeamNumber)
-        redRobots = Robot.objects.filter(metaTeamNumber=arena[0].redMetaTeamNumber)
-        blueMetaTeam = MetaTeam.objects.filter(number=arena[0].blueMetaTeamNumber)
-        blueRobots = Robot.objects.filter(metaTeamNumber=arena[0].blueMetaTeamNumber)
+    redMetaTeam = MetaTeam.objects.filter(number=arena[0].redMetaTeamNumber)
+    redRobots = Robot.objects.filter(metaTeamNumber=arena[0].redMetaTeamNumber)
+    blueMetaTeam = MetaTeam.objects.filter(number=arena[0].blueMetaTeamNumber)
+    blueRobots = Robot.objects.filter(metaTeamNumber=arena[0].blueMetaTeamNumber)
 
-        for i in range(4):
-            redRobot = Robot.objects.filter(metaTeamNumber=arena[0].redMetaTeamNumber, number=(i+1))
-            redRobot.update(health=incomingData[5+i])
-            blueRobot = Robot.objects.filter(metaTeamNumber=arena[0].blueMetaTeamNumber, number=(i+1))
-            blueRobot.update(health=incomingData[9+i])
+    for i in range(4):
+        redRobot = Robot.objects.filter(metaTeamNumber=arena[0].redMetaTeamNumber, number=(i+1))
+        redRobot.update(health=incomingData[5+i])
+        blueRobot = Robot.objects.filter(metaTeamNumber=arena[0].blueMetaTeamNumber, number=(i+1))
+        blueRobot.update(health=incomingData[9+i])
 
-    except socket.error:
-        # print("no data")
-        pass
 
     if arena[0].towerStatus == 0:
         towerStatus = "Not captured"
     else:
-        towerStatus = "Captured"
+        towerStatus = "Captured!"
 
     redMetaTeam = MetaTeam.objects.filter(number=arena[0].redMetaTeamNumber)
     redRobots = Robot.objects.filter(metaTeamNumber=arena[0].redMetaTeamNumber)
@@ -64,6 +61,9 @@ def update(request):
         arenaStatus = "Off"
     else:
         arenaStatus = "On"
+
+    print(redMetaTeam)
+    print(blueMetaTeam)
 
     percent = random.uniform(0,100)
     data = {"arenaStatus": arenaStatus,
@@ -91,5 +91,4 @@ def update(request):
             "blueRobot4Name": blueRobots[3].name,
             "blueRobot4Health": int(blueRobots[3].health/params.maxRobotHealth)*100,
             }
-    print(data)
     return JsonResponse(data)

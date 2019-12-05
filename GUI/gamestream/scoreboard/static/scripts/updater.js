@@ -66,7 +66,7 @@ function showTime(){
           .text(data.blueRobot4Health);
 
           document.getElementById("arenaStage").innerHTML = data.arenaStage;
-          // document.getElementById("towerStatus").innerHTML = data.towerStatus;
+          document.getElementById("towerStatus").innerHTML = data.towerStatus;
           document.getElementById("arenaStatus").innerHTML = data.arenaStatus;
           if(data.arenaStatus == "On" && timerStatus == false) {
             startTime = d;
@@ -83,8 +83,11 @@ function showTime(){
     });
 
     if(timerStatus) {
-      currTime = d - startTime;
-      document.getElementById("timer").innerHTML = currTime.toLocaleTimeString;
+      var currTime = d.getTime() - startTime.getTime();
+      var minutes = parseInt(currTime/1000/60);
+      var seconds = parseInt(currTime/1000)-minutes*60;
+      document.getElementById("minutes").innerHTML = minutes.toString().padStart(2,"0");
+      document.getElementById("seconds").innerHTML = seconds.toString().padStart(2,"0");
     }
     else {
       document.getElementById("timer").innerHTML = "00:00:00";
@@ -95,5 +98,5 @@ function stopFunction(){
 }
 $(document).ready(function(){
     startTime = 0;
-    myVar = setInterval("showTime()", 100);
+    myVar = setInterval("showTime()", 50);
 });
