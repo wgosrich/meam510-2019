@@ -277,7 +277,6 @@ class Arena:
         # for rob in self.robots+self.nexuses: # (Removed - 12 Nov 2019 - Aslamah)
         for rob in self.nexuses: # (Added - 12 Nov 2019 - Aslamah)
             rob.update_health()
-            print(rob.health)
 
 
     def rob_who_IP(self, IP):
@@ -338,8 +337,7 @@ class Arena:
 
 
 
-        towerByte = (np.uint8((self.towers[0].capturePercentage + 100)/14) +
-                     (np.uint8((self.towers[1].capturePercentage + 100)/14)<<4))
+        towerByte = (np.uint8(self.towers[0].captureState) | np.uint8(self.towers[1].captureState))
 
         # (Added - 4 Nov 2019 - Walker)
         #create integer list of robot starting health
@@ -406,6 +404,95 @@ class Arena:
 
         return outputString
 
+    def get_message_gui(self):
+        """Summary
+
+        Returns:
+            TYPE: Description
+
+        Args:
+            rob (TYPE): Description
+        """
+        #FIXME Debug code need these to come from the robots WHAT IS RESET
+
+                    # (Added - 5 Nov 2019 - Aslamah)
+                    #(np.uint8(self.sync << 3) +  (Removed - 5 Nov 2019 - Aslamah)
+        infoByte =  (np.uint8(self.autonomousMode << 2) +  \
+                    np.uint8(self.demandReset << 1) +  \
+                    np.uint8(self.isGameOn << 0))
+        cooldownByte = 0
+        # (Removed - 11 Nov 2019 - Aslamah)
+        # for ind, rob in enumerate(self.robots):
+        #     cooldownByte += (rob.isCooldownHit<<ind)
+
+
+
+        towerByte = (np.uint8(self.towers[0].captureState) | np.uint8(self.towers[1].captureState))
+
+        # (Added - 4 Nov 2019 - Walker)
+        #create integer list of robot starting health
+        startHealth = [0]*8
+        for enum, rob in enumerate(self.redTeam.robots):
+            startHealth[enum] = rob.health
+        for enum, rob in enumerate(self.blueTeam.robots):
+            startHealth[enum+4] = rob.health
+
+        # (Added - 4 Nov 2019 - Walker)
+        #create (currently empty) location list for broadcast
+        location = [0]*8
+
+        #create integer list of robots health
+        health = [0]*8
+        for enum, rob in enumerate(self.redTeam.robots):
+            health[enum] = rob.health
+        for enum, rob in enumerate(self.blueTeam.robots):
+            health[enum+4] = rob.health
+        """ (Removed - 4 Nov 2019 - Walker)
+        outputString = struct.pack('=BBHH12B',
+                                   np.uint8(128 + infoByte),
+                                   np.uint8(cooldownByte),
+                                   np.uint16(self.nexuses[0].health),
+                                   np.uint16(self.nexuses[1].health),
+                                   np.uint8(health[0]),
+                                   np.uint8(health[1]),
+                                   np.uint8(health[2]),
+                                   np.uint8(health[3]),
+                                   np.uint8(health[4]),
+                                   np.uint8(health[5]),
+                                   np.uint8(health[6]),
+                                   np.uint8(health[7]),
+                                   np.uint8(towerByte),
+                                   np.uint8(self.redTeam.number),
+                                   np.uint8(self.blueTeam.number),
+                                   np.uint8(128 + 2))
+        """
+        #(Added - 4 Nov 2019 - Walker)
+        outputString = struct.pack('=BHH20B',
+            np.uint8(128 + infoByte),
+            np.uint16(self.nexuses[0].health),
+            np.uint16(self.nexuses[1].health),
+            np.uint8(startHealth[0]),
+            np.uint8(startHealth[1]),
+            np.uint8(startHealth[2]),
+            np.uint8(startHealth[3]),
+            np.uint8(startHealth[4]),
+            np.uint8(startHealth[5]),
+            np.uint8(startHealth[6]),
+            np.uint8(startHealth[7]),
+            np.uint8(location[0]),
+            np.uint8(location[1]),
+            np.uint8(location[2]),
+            np.uint8(location[3]),
+            np.uint8(location[4]),
+            np.uint8(location[5]),
+            np.uint8(location[6]),
+            np.uint8(location[7]),
+            np.uint8(towerByte),
+            np.uint8(self.redTeam.number),
+            np.uint8(self.blueTeam.number),
+            np.uint8(128 + 2)) # why does Diego terminate with 10000010?? seems like it should be 128+1
+
+        return outputString
 
     # (Added - 11 Nov 2019 - Aslamah)
     def receive_tophat_message(self, data, ip):

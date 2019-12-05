@@ -34,6 +34,7 @@ ipAddress = get_host_name_IP()[1]
 try:
     # Create UDP State Update Loop Thread, which sends 4 times a second
     udpUpdateLoop = RoBAThreading.UDPBroadcastLoop(arena, port=5555, delay=0.25, broadcastType=params.broadcastType)
+    udpGUILoop = RoBAThreading.UDPSenderLoop(arena, port=11000, delay=0.01, receiverIP=params.ipGUI)
     udpTopHatReceiverLoop = RoBAThreading.UDPReceiverLoop(arena, port=10000, delay=0.001) # (Added - 11 Nov 2019 - Aslamah)
     tcpServerLoop = RoBAThreading.RoBATCPListener(ipAddress, arena, port=4444)
     #syncServerLoop = RoBAThreading.SyncServer(ipAddress, arena, port=3333, timeout=10) (Removed - 5 Nov 2019 - Aslamah)
@@ -42,6 +43,7 @@ try:
     # syncServerLoop.listenOnly = 1
 
     udpUpdateLoop.start()
+    udpGUILoop.start()
     udpTopHatReceiverLoop.start() # (Added - 11 Nov 2019 - Aslamah)
     tcpServerLoop.start()
     #syncServerLoop.start() (Removed - 5 Nov 2019 - Aslamah)
@@ -63,6 +65,7 @@ except Exception as err:
 
 finally:
     udpUpdateLoop.shutdownFlag.set()
+    udpGUILoop.shutdownFlag.set()
     udpTopHatReceiverLoop.shutdownFlag.set() # (Added - 11 Nov 2019 - Aslamah)
     tcpServerLoop.shutdownFlag.set()
     #syncServerLoop.shutdownFlag.set() # (Removed - 11 Nov 2019 - Aslamah)
@@ -71,6 +74,7 @@ finally:
     stateLog.shutdownFlag.set()
 
     udpUpdateLoop.join()
+    udpGUILoop.join()
     udpTopHatReceiverLoop.join() # (Added - 11 Nov 2019 - Aslamah)
     tcpServerLoop.join()
     # syncServerLoop.join() # (Removed - 11 Nov 2019 - Aslamah)

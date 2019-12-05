@@ -6,7 +6,6 @@ import socket
 import time
 import datetime
 import struct
-import numpy as np
 from RoBAQueues import *
 from RoBAParams import RoBAParams
 

@@ -44,6 +44,7 @@ class RoBAParams:
     ipSubnet = '192.168.1.' # (Added - 12 Nov 2019 - Aslamah)
     ipOffset = 100 # (Added - 12 Nov 2019 - Aslamah)
     broadcastType = 'AS' # AS-all subnets, 1S-1.subnet
+    ipGUI = "192.168.1.3"
 
 
     def respawn_time_function(self, arena):

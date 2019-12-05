@@ -368,6 +368,61 @@ class UDPBroadcastLoop(ProtectedLoop):
         self.udpServer.close()
         print('Thread #%s stopped: UDP broadcast loop' % self.ident)
 
+# Added - 5 Dec - 2019
+class UDPSenderLoop(ProtectedLoop):
+    def __init__(self, arena, port=5555, delay=1, receiverIP="0.0.0.0"):
+
+        ProtectedLoop.__init__(self)
+        self.delay = delay
+
+        self.port = port
+        self.arena = arena
+
+        # Get the current host and IP address
+        self.ipAddress = get_host_name_IP()[1]
+        self.receiverIPAddrress = receiverIP
+
+        # Create UDPserver for syncing
+        self.udpServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+
+        self.listenOnly = 0
+        self.lastSend = time.time()
+
+    def prot_loop_startup(self):
+        """Summary
+        """
+        print('Thread #%s started: UDP sender loop' % self.ident)
+
+    def prot_loop_run(self):
+        """Summary
+        """
+
+        # print("Update message sending: %s" % self.ident)
+
+        # time.sleep(self.delay)
+        # print('Thread #%s sending UDP broadcast' % self.ident)
+        if time.time() > (self.lastSend + self.delay):
+            #DEBUG print(self.lastSend)
+            with self.arena.lock:
+                self.arena.update()
+                if not self.listenOnly:
+                    try:
+                        self.udpServer.connect((self.receiverIPAddrress, self.port))
+                        self.udpServer.send(self.arena.get_message_gui())
+                        self.lastSend = time.time()
+                    except:
+                        pass
+                    # self.arena.logL.write(datetime.now().strftime("%H:%M:%S:%f")+"\n")
+        else:
+            time.sleep(.01)
+
+    def prot_loop_shutdown(self):
+        """Summary
+        """
+        # ... Clean shutdown code here ...
+        self.udpServer.close()
+        print('Thread #%s stopped: UDP sender loop' % self.ident)
+
 # (Added - 11 Nov 2019 - Aslamah)
 class UDPReceiverLoop(ProtectedLoop):
     def __init__(self, arena, port=10000, delay=0.001):
