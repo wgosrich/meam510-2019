@@ -68,9 +68,10 @@ FASTLED_USING_NAMESPACE
 
 #define RED 0xFF0000          // color for the red team
 #define BLUE 0x0000FF         // color for the blue team
-#define TEAMCOLOR RED
+#define TEAMCOLOR BLUE
 #define HEALTHCOLOR 0x00FF00  // color for the health LEDs
-#define FULLHEALTH 1000
+#define WHITE 0XFFFFFF
+#define FULLHEALTH 48
 #define FLASHHALFPERIOD 250   // the blue team is supposed to flash this is half of the period of that flash
 
 #define DATA_PIN    12  //What pin is the LED ring data on
@@ -111,8 +112,8 @@ static TaskHandle_t userTaskHandle = 0;
 
 #define INCOMINGMESSAGESIZE 128
 
-const char* ssid     = "AslamahFi";
-const char* password = "finewhatever";
+const char* ssid     = "CENTRAL-2.4";
+const char* password = "r0b0tics";
 
 
 #define EVENTDELAY 300 // delay this many ms after the button or weapon is used before it can change again
@@ -120,11 +121,13 @@ const int udpSyncPort = 3333;
 const int TCPSyncPort = udpSyncPort; // !!!!! 11/5 Diego separating the UDP response port
 const int TCPSendPort = 4444;
 const int udpReceivePort = 5555;
+const int ipSubnet = 1;
 
-IPAddress centralIP(192,168,43,186);  //IP address for central.  Changing this in the code appears to only change it locally.
+IPAddress centralIP(192,168,ipSubnet,2);  //IP address for central.  Changing this in the code appears to only change it locally.
 byte robotNumber;
 
 volatile bool buttonPressedFlag = 0;
+volatile bool isDead = 0;
 
 volatile unsigned long buttonPressedTime = 0;
 
@@ -149,8 +152,8 @@ void IRAM_ATTR handleButtonInterrupt() {
     if((millis()-syncTime)>(buttonPressedTime+EVENTDELAY)){// if it has been more than the delay you can assume it is another hit.  It is not clear if this was a bouncing issue or with how the interrupts were handled, but this accounts for either.
       buttonPressedTime = millis()-syncTime; // Set the time the button was pressed.
       buttonPressedFlag = 1;  // Set the flag so we know to send a message
-      //Serial.print("button pressed at ");
-      //Serial.println(buttonPressedTime);
+//      Serial.print("button pressed at ");
+//      Serial.println(buttonPressedTime);
     }
   portEXIT_CRITICAL_ISR(&mux);
 }
@@ -214,16 +217,45 @@ void SetupFastLED(void){
 
 
 void ShowHealth(int health){
-  //int healthLeds[] = {1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,20,21,22,23}; // the location of the 24 LEDs used for health
+//  int healthLeds1[] = {1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,20,21,22,23}; // the location of the 24 LEDs used for health
   //int teamColor = RED*digitalRead(ROBOTID0)+BLUE*!digitalRead(ROBOTID0);
   int teamColor = TEAMCOLOR;
   leds[0] = teamColor*(health > 0);  // last LED doesn't go off till the health is 0
   leds[NUM_LEDS-1] = teamColor*(health == FULLHEALTH);  // last LED doesn't go off till the health is 0
-  for(int i=1; i<NUM_LEDS-1; i++){
-    leds[i] = teamColor*(health > (i*FULLHEALTH/NUM_LEDS));  // the other leds go off in increments of 5
+  for(int i=1; i<NUM_LEDS/3; i++){
+    leds[i] = teamColor*(health > (i*FULLHEALTH/(NUM_LEDS/3)));  // the other leds go off in increments of 5
+    leds[i+24] = leds[i];
+    leds[i+48] = leds[i];
   }
+}
 
+void showDeath(void) {
+  for(int i=0; i< NUM_LEDS; i++) {
+    leds[i] = WHITE;
+  }
+  delay(500);  // wait a bit so the LEDs don't cycle too fast
+  FastLEDshowESP32(); //Actually send the values to the ring
+  clearLEDs();
+  delay(500);  // wait a bit so the LEDs don't cycle too fast
+  FastLEDshowESP32(); //Actually send the values to the ring
 
+  for(int i=0; i< NUM_LEDS; i++) {
+    leds[i] = WHITE;
+  }
+  delay(500);  // wait a bit so the LEDs don't cycle too fast
+  FastLEDshowESP32(); //Actually send the values to the ring
+  clearLEDs();
+  delay(500);  // wait a bit so the LEDs don't cycle too fast
+  FastLEDshowESP32(); //Actually send the values to the ring
+
+  for(int i=0; i< NUM_LEDS; i++) {
+    leds[i] = WHITE;
+  }
+  delay(500);  // wait a bit so the LEDs don't cycle too fast
+  FastLEDshowESP32(); //Actually send the values to the ring
+  clearLEDs();
+  delay(500);  // wait a bit so the LEDs don't cycle too fast
+  FastLEDshowESP32(); //Actually send the values to the ring
 }
 
 void clearLEDs(void){
@@ -275,14 +307,14 @@ void setup() {
   Serial.println(robotNumber);
   Serial.println();
 
-  IPAddress myIPaddress(192, 168, 43, (robotNumber)); // arbitrary address need to send to
+  IPAddress myIPaddress(192, 168, ipSubnet, (robotNumber)); // arbitrary address need to send to
 
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
   // Connect to the WiFi
   WiFi.begin(ssid, password);
-  WiFi.config(myIPaddress, IPAddress(192, 168, 1, 1), IPAddress(255, 255, 255, 0));
+  WiFi.config(myIPaddress, IPAddress(192, 168, ipSubnet, 1), IPAddress(255, 255, 255, 0));
 
   // Wait for connection
   while (WiFi.status() != WL_CONNECTED) {
@@ -331,6 +363,7 @@ void loop() {
    static bool gameStatus = 0;              // game on 1, game off 0
    static bool reset = 0;                   // 1 for reseting, not sure what the intention is here, check with Diego
    static bool autoMode = 0;                // 0 not autonomous, 1 is autonomous
+   static bool prevGameStatus = 0;
 
    // (Removed - 5 Nov 2019 - Aslamah)
    // static bool syncStatus = 0;
@@ -353,14 +386,6 @@ void loop() {
    //packetNumber = handleTCPserver(incomingDataAddress);
   //Serial.println("1");
   // If something happened send that info
-
-//  Aslamah test
-  static int time_old = millis();
-  if(millis() - time_old >= 1000) {
-    buttonPressedFlag = true;
-    sendButtonPress();
-    time_old = millis();
-  }
   //Serial.println("2");
 
 
@@ -373,11 +398,11 @@ void loop() {
 
     Serial.print("Received packet of size ");
     Serial.println(packetSize);
-    Serial.print("From ");
-    //IPAddress centralIP = udpSync.remoteIP();
-    Serial.print(centralIP);
-    Serial.print(", port ");
-    Serial.println(udpReceive.remotePort());
+//    Serial.print("From ");
+//    //IPAddress centralIP = udpSync.remoteIP();
+//    Serial.print(centralIP);
+//    Serial.print(", port ");
+//    Serial.println(udpReceive.remotePort());
 
     // read the packet into packetBufffer
     int len = udpReceive.read(incomingData, 200);
@@ -510,8 +535,24 @@ void loop() {
   else{
     health = (healthNexus [2] | (healthNexus[3]<<8));
   }
-  ShowHealth(health); //set the LEDs for the health
 
+  if(health == 0 && isDead == 0 && prevGameStatus == 1) {
+    showDeath();
+    isDead = 1;
+  }
+  else {
+    ShowHealth(health); //set the LEDs for the health
+  }
+  prevGameStatus = gameStatus;
+
+  //  Aslamah test
+//  static int time_old = millis();
+//  if(millis() - time_old >= 1000) {
+//    buttonPressedFlag = true;
+//    time_old = millis();
+//  }
+
+  sendButtonPress(gameStatus);
   Serial.print("health: ");
   Serial.println(health);
 
@@ -522,9 +563,9 @@ void loop() {
 }
 
 
-void sendButtonPress(){
+void sendButtonPress(bool gameStatus){
   // send the TCP packet when button pressed
-      if(buttonPressedFlag){
+      if(buttonPressedFlag && gameStatus){
         //char packet[] = {WASHIT, buttonPressedTime, buttonPressedTime>>(8*1), buttonPressedTime>>(8*2), buttonPressedTime>>(8*3)}; // (Removed - 5 Nov 2019 - Aslamah)
         char packet[] = {WASHIT}; // (Added - 5 Nov 2019 - Aslamah)
         buttonPressedFlag = 0;  //clear flag

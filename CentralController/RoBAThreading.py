@@ -8,7 +8,7 @@ import numpy as np
 from RoBANetwork import get_host_name_IP
 from RoBAClasses import  RobotNotActiveError, RobotListEmptyError
 import struct
-
+from tkinter import *
 
 
 
@@ -614,3 +614,26 @@ class LogLoop(ProtectedLoop):
             line (TYPE): Description
         """
         self.lines.append(line)
+
+class GUILoop(ProtectedLoop):
+    def __init__(self, arena, delay=0.5):
+        ProtectedLoop.__init__(self)
+        arena = arena
+        self.delay = delay
+        root = Tk() # create tkinter object
+
+    def prot_loop_startup(self):
+        """Summary
+        """
+        print('Thread #%s started: GUI loop' % self.ident)
+
+    def prot_loop_run(self):
+        """Summary
+        """
+        time.sleep(self.delay)
+
+    def prot_loop_shutdown(self):
+        """Summary
+        """
+        # ... Clean shutdown code here ...
+        print('Thread #%s stopped' % self.ident)

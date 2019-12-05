@@ -69,8 +69,8 @@ CRGB leds[NUM_LEDS];
 #define MADEHIT 2
 #define HEALING 3
 
-#define INCOMINGMESSAGESIZE 128
-
+#define INCOMINGMESSAGESIZE 300
+#define LEDBUILTIN 2
 //*********************************************************
 
 
@@ -162,7 +162,8 @@ void loop() {
   //Serial.println("384");
   int packetSize = udpReceive.parsePacket();
   if (packetSize) {
-    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    digitalWrite(LEDBUILTIN,!digitalRead(LEDBUILTIN));
+
     Serial.print("Received packet of size ");
     Serial.println(packetSize);
     Serial.print("From ");
@@ -170,19 +171,19 @@ void loop() {
     Serial.print(centralIP);
     Serial.print(", port ");
     Serial.println(udpReceive.remotePort());
-    //Serial.println("395");
+
     // read the packet into packetBufffer
-    int len = udpReceive.read(incomingData, 200);
-    if (len > 0) {
-      incomingData[len] = 0;
-    }
+    int len = udpReceive.read(incomingData, INCOMINGMESSAGESIZE);
+//    if (len > 0) {
+//      packetBuffer[len] = 0;
+//    }
 //    Serial.println("Contents:");
-//    for (int i = 0; i < len; i++) {
+//    for(int i=0; i<len; i++) {
 //      Serial.println(incomingData[i]);
 //    }
     packetNumber++;
     udpReceive.flush();
-    //Serial.println("407");
+
   }
 
   // -----------------------------------------------------------------
@@ -228,9 +229,9 @@ void loop() {
     towerStatus[2] = 0x0F & (incomingData[14] >> 4);
   }
 
-  if (reset) {
-    ESP.restart();
-  }
+//  if (reset) {
+//    ESP.restart();
+//  }
 
   // end parse
   //------------------------------------------------------------------------
@@ -264,9 +265,10 @@ void tower_send(){
 
         // packet = [2*istowercaptured]
         // char packet[] = {((MADEHIT * abs(towerState)) | ((towerState==1)<<4)|(1<<7)), towerValue};(removed- 12/2/19 - walker) // the one in the 8th bit is just so the first byte is not zero
-        char packet[] = {(abs(towerState)) | (((towerState==1)<<1)|(1<<7))}; //(added - 12/2/19 - walker)
+        char packet[] = {(uint8_t(abs(towerState))) | (((towerState==1)<<1)|(1<<7))}; //(added - 12/2/19 - walker)
       //cli = serverSend.available();
       Serial.println("trying to send");
+      Serial.println(packet[0]);
       Serial.println(centralIP);
       cli.connect(centralIP, TCPSendPort);
       if (cli) {

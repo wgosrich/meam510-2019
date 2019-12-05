@@ -27,7 +27,7 @@ def get_host_name_IP():
         # hostName = socket.gethostname()
         # hostIP = socket.gethostbyname(hostName)
         hostName = "central"
-        hostIP = params.ipSubnet + '2'
+        hostIP = params.ipSubnet + '47'
         print("Hostname :  ", hostName)
         print("IP : ", hostIP)
         return hostName, hostIP

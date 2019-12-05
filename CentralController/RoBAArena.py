@@ -277,7 +277,6 @@ class Arena:
         # for rob in self.robots+self.nexuses: # (Removed - 12 Nov 2019 - Aslamah)
         for rob in self.nexuses: # (Added - 12 Nov 2019 - Aslamah)
             rob.update_health()
-            print(rob.health)
 
 
     def rob_who_IP(self, IP):
