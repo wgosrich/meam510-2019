@@ -24,4 +24,4 @@ urlpatterns = [
 ]
 
 # Execute once
-udpReceiver = UDPBroadcastReceiver()
+udpReceiver = UDPBroadcastReceiver("192.168.1.3", 11000)

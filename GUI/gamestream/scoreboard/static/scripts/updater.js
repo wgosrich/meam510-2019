@@ -90,7 +90,10 @@ function showTime(){
       document.getElementById("seconds").innerHTML = seconds.toString().padStart(2,"0");
     }
     else {
-      document.getElementById("timer").innerHTML = "00:00:00";
+      var minutes = 0;
+      var seconds = 0;
+      document.getElementById("minutes").innerHTML = minutes.toString().padStart(2,"0");
+      document.getElementById("seconds").innerHTML = seconds.toString().padStart(2,"0");
     }
 }
 function stopFunction(){
@@ -98,5 +101,5 @@ function stopFunction(){
 }
 $(document).ready(function(){
     startTime = 0;
-    myVar = setInterval("showTime()", 50);
+    myVar = setInterval("showTime()", 1);
 });
