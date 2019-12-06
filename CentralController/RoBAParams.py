@@ -43,7 +43,7 @@ class RoBAParams:
     towerHitRate = 1 #Hz
     ipSubnet = '192.168.1.' # (Added - 12 Nov 2019 - Aslamah)
     ipOffset = 100 # (Added - 12 Nov 2019 - Aslamah)
-    broadcastType = 'AS' # AS-all subnets, 1S-1.subnet
+    broadcastType = '1S' # AS-all subnets, 1S-1.subnet
     ipGUI = "192.168.1.3"
 
 
@@ -65,4 +65,5 @@ class RoBAParams:
         Returns:
             int : starting health based on weight
         """
-        return max(20/(weight + 0.5), self.robotMinStartHealth)
+        # weight should be in kg
+        return max(20/(weight/1000.0 + 0.5), self.robotMinStartHealth)
