@@ -26,7 +26,7 @@
 #include "FastLED.h"
 
 // How many leds in your strip?
-#define NUM_LEDS 25
+#define NUM_LEDS 23
 #define DATA_PIN 12
 #define CLOCK_PIN 27
 
@@ -74,7 +74,7 @@ CRGB leds[NUM_LEDS];
 //*********************************************************
 
 
-const char* ssid     = "CENTRAL-2.4";
+const char* ssid     = "TestCentral";
 const char* password = "r0b0tics";
 
 const int TCPSendPort = 4444;
@@ -264,7 +264,7 @@ void tower_send(){
 
         // packet = [2*istowercaptured]
         // char packet[] = {((MADEHIT * abs(towerState)) | ((towerState==1)<<4)|(1<<7)), towerValue};(removed- 12/2/19 - walker) // the one in the 8th bit is just so the first byte is not zero
-        char packet[] = {(abs(towerState)) | (((towerState==1)<<1)|(1<<7))}; //(added - 12/2/19 - walker)
+        char packet[] = {(abs(towerState)) | (((!(towerState==1))<<1)|(1<<7))}; //(added - 12/2/19 - walker)
       //cli = serverSend.available();
       Serial.println("trying to send");
       Serial.println(centralIP);
