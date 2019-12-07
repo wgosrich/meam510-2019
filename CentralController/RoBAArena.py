@@ -225,6 +225,11 @@ class Arena:
         """
         check = (not (self.redTeam.nexus.health and self.blueTeam.nexus.health))
         if check:
+            if self.redTeam.nexus.health:
+                print("\n Winner : RED")
+            elif self.blueTeam.nexus.health:
+                print("\n Winner: BLUE")
+                
             for rob in self.robots + self.nexuses + self.towers:
                 rob.isActive = False
         return check
@@ -506,6 +511,7 @@ class Arena:
 
         rob.isActive = False if (message[0]) else True
         rob.health = int(message[1] | message[2] << 1 | message[3] << 2 | message[4] << 3 | message[5] << 4)
+        print(rob.health)
         rob.xLocation = int(message[8] | message[9] << 1 | message[10] << 2 | message[11] << 3)
         rob.yLocation = int(message[12] | message[13] << 1 | message[14] << 2 | message[15] << 3)
 

@@ -66,4 +66,4 @@ class RoBAParams:
             int : starting health based on weight
         """
         # weight should be in kg
-        return max(20/(weight/1000.0 + 0.5), self.robotMinStartHealth)
+        return max(20/(weight + 0.5), self.robotMinStartHealth)

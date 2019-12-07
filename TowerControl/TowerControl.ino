@@ -116,7 +116,7 @@ void setup() {
     digitalWrite(LED_BUILTIN, LOW);
     
     //IPAddress myIPaddress(192, 168, 1, 98+digitalRead(TOWER_SELECT));
-    IPAddress myIPaddress(192, 168, 1, 98);
+    IPAddress myIPaddress(192, 168, 1, 99);
     
     WiFi.config(myIPaddress, IPAddress(192, 168, 1, 1), IPAddress(255, 255, 255, 0)); 
     WiFi.begin(ssid, password);
