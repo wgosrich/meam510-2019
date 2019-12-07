@@ -204,7 +204,7 @@ void setup()
 {
     Serial.begin(115200);
     Serial.println("Start of Setup");
-    Serial.println("TopHatCode Version: v2");
+    Serial.println("TopHatCode Version: v3");
 
     // setup pins
     pinMode(ROBOTID0, INPUT_PULLUP);
@@ -375,20 +375,21 @@ void loop()
         // set max health of robot (if necessary)
         if (maxHealth == 255)
         {
-//            if (metaTeamNumber == redMetaTeam)
-//            {
-//                maxHealth = redRobotHealth[robotNumber-1];  // -1 because arrays are 0-indexed
-//                currHealth = maxHealth;
-//            }
-//            else if (metaTeamNumber == blueMetaTeam)
-//            {
-//                maxHealth = blueRobotHealth[robotNumber-1]; // -1 because arrays are 0-indexed
-//                currHealth = maxHealth;
-//            }
-
-            // just for allowing the students to test, remove later on
-            maxHealth = blueRobotHealth[robotNumber-1];
-            currHealth = maxHealth;
+            if ((redMetaTeam == 100) && (blueMetaTeam == 200))  // remove metateam check to allow students to test
+            {
+                maxHealth = blueRobotHealth[robotNumber-1];
+                currHealth = maxHealth;
+            }
+            else if (metaTeamNumber == redMetaTeam)
+            {
+                maxHealth = redRobotHealth[robotNumber-1];      // -1 because arrays are 0-indexed
+                currHealth = maxHealth;
+            }
+            else if (metaTeamNumber == blueMetaTeam)
+            {
+                maxHealth = blueRobotHealth[robotNumber-1];     // -1 because arrays are 0-indexed
+                currHealth = maxHealth;
+            }
         }       
     }
     Serial.print("currHealth: ");
@@ -436,7 +437,7 @@ void loop()
     // ========================= I2C start =============================
     // send information to robot over I2C
     // put data into the I2C buffer
-    digitalWrite(LED_BUILTIN, HIGH);
+//    digitalWrite(LED_BUILTIN, HIGH);
     data_wr[0] = incomingData[0];
     data_wr[1] = currHealth;
     data_wr[2] = respawnTimer;
@@ -447,24 +448,24 @@ void loop()
     }
     delay(30);
     
-    digitalWrite(LED_BUILTIN, LOW);
+//    digitalWrite(LED_BUILTIN, LOW);
     // ========================== I2C end ==============================
 
     // ====================== UDP send start ===========================
-//    // send information to central over UDP
-//    // put data into the UDP buffer
-//    digitalWrite(LED_BUILTIN, HIGH);
-//    outgoingData[0] = (currHealth << 1) | (isDead);
-//    outgoingData[1] = 0xFF;     // robot location, but this is not implemented for now
-//    outgoingData[2] = 0;        // null termination
-//
-//    udp.beginPacket(centralIP, udpCentralTargetPort);
-//    udp.printf("%s", outgoingData);
-//    udp.endPacket();
-//    
-//    delay(30);
-//    
-//    digitalWrite(LED_BUILTIN, LOW);
+    // send information to central over UDP
+    // put data into the UDP buffer
+    digitalWrite(LED_BUILTIN, HIGH);
+    outgoingData[0] = (currHealth << 1) | (isDead);
+    outgoingData[1] = 0xFF;     // robot location, but this is not implemented for now
+    outgoingData[2] = 0;        // null termination
+
+    udp.beginPacket(centralIP, udpCentralTargetPort);
+    udp.printf("%s", outgoingData);
+    udp.endPacket();
+    
+    delay(30);
+    
+    digitalWrite(LED_BUILTIN, LOW);
     // ======================= UDP send end ============================
 
 //    Serial.println("End of loop");

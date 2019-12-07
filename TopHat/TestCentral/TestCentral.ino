@@ -75,8 +75,6 @@ void loop()
 
     // create the message
     sendBuffer[0]  = (1 << 3) | (autoMode << 2) | (gameState << 0); // 1 to make sure it's non-zero
-    Serial.print("buffer0: ");
-    Serial.println(sendBuffer[0]);
     sendBuffer[1]  = 0xFF;
     sendBuffer[2]  = 0xFF;
     sendBuffer[3]  = 0xFF;
@@ -100,8 +98,10 @@ void loop()
     sendBuffer[19] = 0xFF;
     sendBuffer[20] = 0xFF;
     sendBuffer[21] = 0xFF;
-    sendBuffer[22] = 0xFF;
-    sendBuffer[23] = 0xFF;
+    // meta team numbers for student testing
+    sendBuffer[22] = 100;
+    sendBuffer[23] = 200;
+    // end meta team numbers for student testing
     sendBuffer[24] = 0xFF;
     sendBuffer[25] = 0x00;
 
