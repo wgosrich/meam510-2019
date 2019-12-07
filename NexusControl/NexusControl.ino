@@ -68,7 +68,7 @@ FASTLED_USING_NAMESPACE
 
 #define RED 0xFF0000          // color for the red team
 #define BLUE 0x0000FF         // color for the blue team
-#define TEAMCOLOR RED
+#define TEAMCOLOR BLUE
 #define HEALTHCOLOR 0x00FF00  // color for the health LEDs
 #define FULLHEALTH 1000
 #define FLASHHALFPERIOD 250   // the blue team is supposed to flash this is half of the period of that flash
@@ -111,8 +111,8 @@ static TaskHandle_t userTaskHandle = 0;
 
 #define INCOMINGMESSAGESIZE 128
 
-const char* ssid     = "AslamahFi";
-const char* password = "finewhatever";
+const char* ssid     = "TestCentral";
+const char* password = "r0b0tics";
 
 
 #define EVENTDELAY 300 // delay this many ms after the button or weapon is used before it can change again
@@ -121,7 +121,7 @@ const int TCPSyncPort = udpSyncPort; // !!!!! 11/5 Diego separating the UDP resp
 const int TCPSendPort = 4444;
 const int udpReceivePort = 5555;
 
-IPAddress centralIP(192,168,43,186);  //IP address for central.  Changing this in the code appears to only change it locally.
+IPAddress centralIP(192,168,1,2);  //IP address for central.  Changing this in the code appears to only change it locally.
 byte robotNumber;
 
 volatile bool buttonPressedFlag = 0;
@@ -275,7 +275,7 @@ void setup() {
   Serial.println(robotNumber);
   Serial.println();
 
-  IPAddress myIPaddress(192, 168, 43, (robotNumber)); // arbitrary address need to send to
+  IPAddress myIPaddress(192, 168, 1, (robotNumber)); // arbitrary address need to send to
 
   Serial.print("Connecting to ");
   Serial.println(ssid);
