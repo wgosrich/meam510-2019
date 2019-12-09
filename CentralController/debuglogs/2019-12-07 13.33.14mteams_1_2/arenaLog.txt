@@ -1,0 +1,246 @@
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.80
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.99
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.98
+***********Robot Message Tuple(130, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)
+
+***********Getting IO: 192.168.1.81
+***********Robot Message Tuple(1, 0)

@@ -31,7 +31,7 @@ class RoBAParams:
     robotMinStartHealth = 2 # [HP] (Added - 2 Nov 2019 - Aslamah)
     #healAmount = 20 # [HP] (Removed - 2 Nov 2019 - Aslamah)
     #healDelay = 5 # [secs] (Removed - 2 Nov 2019 - Aslamah)
-    towerDPS = 0.5  # [DPS] (Added - 2 Nov 2019 - Aslamah)
+    towerDPS = 0.25  # [DPS] (Added - 2 Nov 2019 - Aslamah)
     #reflectedNexusMulti = .5 # [] (Removed - 2 Nov 2019 - Aslamah)
     maxDamage = 25 # Max allowable damage per hit
     #healFreq = HIGH (Removed - 2 Nov 2019 - Aslamah)
@@ -67,4 +67,4 @@ class RoBAParams:
         """
         # weight should be in kg
 
-        return min(20, max(20/(weight + 0.5), self.robotMinStartHealth))
+        return min(10, np.floor(max(10/(weight + 0.5), self.robotMinStartHealth)))

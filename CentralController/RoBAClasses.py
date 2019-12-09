@@ -169,6 +169,8 @@ class Robot:
 
     # (Added - 2 Nov 2019 - Aslamah)
     def calc_start_health(self):
+        print("IP: ", self.IP, " starthealth: ", params.robot_start_health(self.weight))
+
         return params.robot_start_health(self.weight);
 
 

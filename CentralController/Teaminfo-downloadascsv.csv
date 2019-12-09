@@ -1,29 +1,29 @@
 MetaTeamNumber,MetaTeamName,RobotNumber,RobotID,RobotName,Weight
-1,Rush B,1,1,Nimbus,0.6108805366
-1,Rush B,2,11,404 Not Found,0.8384859969
-1,Rush B,3,23,,0.978680783
-1,Rush B,4,28,K.I.S.S.,0.9176953064
-2,Friendly Fire,1,2,MarioKart,0.9440254557
-2,Friendly Fire,2,8,Brutal Savage Rekt,0.9758671706
-2,Friendly Fire,3,14,Fools,0.8492385439
-2,Friendly Fire,4,20,,0.7617111847
-3,Ninja Turtles,1,6,,0.7664157784
-3,Ninja Turtles,2,12,Leonardo,0.510070533
-3,Ninja Turtles,3,15,,0.8268182968
-3,Ninja Turtles,4,26,Raphael,0.6032071257
-4,"Planes Tranes and Automobiles",1,5,,0.8962327957
-4,"Planes Tranes and Automobiles",2,7,Hogwarts,0.7171723364
-4,"Planes Tranes and Automobiles",3,9,Lil Yachty,0.8631063573
-4,"Planes Tranes and Automobiles",4,24,,0.7469891516
-5,Space Jungle,1,4,BATV,0.5682060021
-5,Space Jungle,2,17,,0.8795607662
-5,Space Jungle,3,18,,0.7848114862
-5,Space Jungle,4,21,,0.5722838466
-6,unknown,1,3,,0.5110292862
-6,unknown,2,10,GM Hotel,0.8186906922
-6,unknown,3,19,Sarah Rothenberg,0.5537813893
-6,unknown,4,22,,0.962047365
-7,Sith,1,13,Darth Vader,0.5245047614
-7,Sith,2,16,Kylo Ren,0.7022281243
-7,Sith,3,25,,0.7757865023
-7,Sith,4,27,,0.9304693799
+1,Team 1,1,1,Nimbus,1.286
+1,Team 11,2,11,404 Not Found,1.004
+1,Team 23,3,23,,1.317
+1,Team 28,4,28,K.I.S.S., 1.150
+2,Team 2,1,2,MarioKart, 1.0
+2,Team 8,2,8,Brutal Savage Rekt,1.292
+2,Team 14,3,14,Fools,1.015
+2,Team 20,4,20,Tokyo Drift,1.411
+3,Team 6,1,6,Donatello,0.96
+3,Team 12,2,12,Leonardo,1.867
+3,Team 15,3,15,Michelangelo, 1.118
+3,Team 26,4,26,Raphael,1.091
+4,Planes Trains and Automobiles,1,5,, 1.223
+4,Planes Trains and Automobiles,2,7,Hogwarts, 1.33
+4,Planes Trains and Automobiles,3,9,Lil Yachty,0.954
+4,Planes Trains and Automobiles,4,24,Super WiFi, 1.843
+5,Team 4,1,4,BATV,1.2
+5,Team 17,2,17,Beetles, 1.1 
+5,Team 18,3,18,,0.885
+5,Team 21,4,21,,1.194
+6,Team 3,1,3,BE Transfers,1.076
+6,Team 10,2,10,GM Hotel,1.17
+6,Team 19,3,19,Sarah Rottenberg,1.443
+6,Team 22,4,22,,1.378
+7,Team 13,1,13,Darth Vader, 1.376
+7,Team 16,2,16,Kylo Ren,1.223
+7,Team 25,3,25,, 0.92
+7,Team 27,4,27,Dark Sidious,0.834

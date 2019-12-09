@@ -22,7 +22,7 @@ from RoBAParams import RoBAParams
 params = RoBAParams()
 
 # arena = Arena('friendly2.csv', 1, 2)
-arena = Arena('Teaminfo-downloadascsv.csv', 1, 2)
+arena = Arena('Teaminfo-downloadascsv.csv', 6, 1)
 # arena = Arena('networkTest.csv', 1, 2)
 
 
